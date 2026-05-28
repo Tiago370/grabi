@@ -6,9 +6,15 @@
 <div class="card-header fw-bold">Comparar Preço</div>
 <div class="card-body">
 <form method="post" class="row g-2">
+{% if codigo %}
 <div class="col-12 col-md-9">
-<input class="form-control form-control-lg" name="codigo" value="{{ codigo }}" placeholder="Leia o código de barras" autofocus>
+<input class="form-control form-control-lg" name="codigo" value="{{ codigo }}" placeholder="Leia o código de barras" readonly>
 </div>
+{% else %}
+<div class="col-12 col-md-9">
+<input class="form-control form-control-lg" name="codigo" placeholder="Leia o código de barras" autofocus>
+</div>
+{% endif %}
 <div class="col-12 d-grid mt-2">
 <button type="button" id="btn-scan" class="btn btn-outline-primary">Ler código pela câmera</button>
 </div>
@@ -79,7 +85,7 @@ btn.addEventListener("click", () => {
       ]
     },
     (decodedText) => {
-      input.value += decodedText
+      input.value = decodedText
       stopScanner()
       //input.form.submit()
     }
