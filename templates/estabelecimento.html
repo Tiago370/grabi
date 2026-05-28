@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% block conteudo %}
+<div class="row justify-content-center">
+<div class="col-lg-8 col-md-10 col-sm-12">
+<div class="card shadow-sm mb-4">
+<div class="card-header fw-bold">Cadastrar Estabelecimento</div>
+<div class="card-body">
+<form method="post" class="row g-2">
+<div class="col-12 col-md-9">
+<input class="form-control form-control-lg" name="nome" placeholder="Digite o nome..." autofocus>
+</div>
+<div class="col-12 col-md-9">
+<input class="form-control form-control-lg" name="endereco" placeholder="Digite o endereço..." >
+</div>
+<div class="col-12 col-md-9">
+<input class="form-control form-control-lg" name="latitude" placeholder="Latitude" >
+</div>
+<div class="col-12 col-md-9">
+<input class="form-control form-control-lg" name="longitude" placeholder="Longitude" >
+</div>
+<div class="col-12 col-md-3 d-grid">
+<button type="submit" class="btn btn-success btn-lg">Cadastrar</button>
+</div>
+</form>
+
+{% if message_type == "danger" %}
+<div class="alert alert-danger mt-3 mb-0" role="alert">
+{{ message_text|safe }}
+</div>
+{% endif %}
+{% if message_type == "info" %}
+<div class="alert alert-info mt-3 mb-0" role="alert">
+{{ message_text|safe }}
+</div>
+{% endif %}
+{% if message_type == "success" %}
+<div class="alert alert-success mt-3 mb-0" role="alert">
+{{ message_text|safe }}
+</div>
+{% endif %}
+</div>
+
+</div>
+
+<div class="d-flex justify-content-between align-items-center mt-4">
+
+</div>
+</div>
+</div>
+
+{% endblock %}
+
