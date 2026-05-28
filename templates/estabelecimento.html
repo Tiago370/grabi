@@ -9,15 +9,25 @@
 <div class="col-12 col-md-9">
 <input class="form-control form-control-lg" name="nome" placeholder="Digite o nome..." autofocus>
 </div>
+
 <div class="col-12 col-md-9">
-<input class="form-control form-control-lg" name="endereco" placeholder="Digite o endereço..." >
+<input class="form-control form-control-lg" name="endereco" placeholder="Digite o endereço...">
 </div>
+
 <div class="col-12 col-md-9">
-<input class="form-control form-control-lg" name="latitude" placeholder="Latitude" >
+<input id="latitude" class="form-control form-control-lg" name="latitude" placeholder="Latitude">
 </div>
+
 <div class="col-12 col-md-9">
-<input class="form-control form-control-lg" name="longitude" placeholder="Longitude" >
+<input id="longitude" class="form-control form-control-lg" name="longitude" placeholder="Longitude">
 </div>
+
+<div class="col-12 col-md-9 d-grid">
+<button type="button" id="btn-localizacao" class="btn btn-primary btn-lg">
+Preencher com minha localização
+</button>
+</div>
+
 <div class="col-12 col-md-3 d-grid">
 <button type="submit" class="btn btn-success btn-lg">Cadastrar</button>
 </div>
@@ -28,25 +38,44 @@
 {{ message_text|safe }}
 </div>
 {% endif %}
+
 {% if message_type == "info" %}
 <div class="alert alert-info mt-3 mb-0" role="alert">
 {{ message_text|safe }}
 </div>
 {% endif %}
+
 {% if message_type == "success" %}
 <div class="alert alert-success mt-3 mb-0" role="alert">
 {{ message_text|safe }}
 </div>
 {% endif %}
 </div>
+</div>
+</div>
+</div>
 
-</div>
+<script>
+const btn = document.getElementById("btn-localizacao")
+const latitudeInput = document.getElementById("latitude")
+const longitudeInput = document.getElementById("longitude")
 
-<div class="d-flex justify-content-between align-items-center mt-4">
+btn.addEventListener("click", () => {
+  if (!navigator.geolocation) {
+    alert("Geolocalização não suportada")
+    return
+  }
 
-</div>
-</div>
-</div>
+  navigator.geolocation.getCurrentPosition(
+    (position) => {
+      latitudeInput.value = position.coords.latitude
+      longitudeInput.value = position.coords.longitude
+    },
+    () => {
+      alert("Não foi possível obter sua localização")
+    }
+  )
+})
+</script>
 
 {% endblock %}
-

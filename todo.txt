@@ -1,35 +1,3 @@
-[X] Dimensionar a tabela de "cadastro de produtos" para o mobile.
-[X] Criar a tela de venda finalizada, contendo o preço total.
-[X] Tratar o preço para quando o usuário inserir vírgula.
-[X] Apresentar o preço com vírgula.
-[X] Criar um script para alimentar o banco de dados com produtos reais
-[X] Criar arquivo .gitignore e remover o "pdv.db" no repositório remoto.
-[X] Criar campo "qtd" na venda e implementar a multiplicação no código de barras.
-[X] Criar um aviso para quando o código não estiver cadastrado.
-[ ] Alterar a lógica para manter apenas o id da venda, e não os itens.
-[ ] Criar botão para enviar o cupom por whatsapp.
-[X] Criar o readme.
-[X] Implementar multiplicação em cadeia.
-[X] Possibilitar o uso do caractere "x".
-[X] Criar um boloqueio dos caracteres não numéricos.
-[X] Criar um registro de packs.
-[ ] Criar lógica que avalia os termos de uma multiplicação em cadeia e verifica se um os termos corresponde a um pack do código.
-[ ] Criar um conjunto de regras (acima de X unidades o produto custa Y)
-[X] Criar paginação na tela de produtos.
-[ ] Criar um registro de promoção.
-[X] Implementar a edição de produtos.
-[X] Implementar a consulta de produtos.
-[ ] FIX consulta de produtos mantendo os dados dos forms.
-[ ] FIX consulta de produtos (paginação).
-[X] Criar consulta de packs.
-[X] Refatorar produtos.
-[X] Refatorar vendas.
-[X] Refatorar pagamentos.
-[ ] Implementar a cópia da descrição do poduto o item de venda.
-[ ] Implementar a visualização e auditagem das vendas realizadas.
-[ ] Corrigir o delete do pack.
-[X] Melhorar a mensagem para o caso de produto não cadastrado em multiplicação em cadeia.
-[X] Criar tela de terminal de consulta.
-[ ] Melhorar os efeitos da rotação no terminal de consulta.
-[ ] Melhorar a formatação do preço no terminal de consulta.
-[ ] Implementar timers nas interações
+[ ] Atualizar o readme.
+[X] Implementar o preenchimento automático dos campos latitude e longitude do estabelecimento.
+[ ] Implementar um algoritmo que detecta o estabelecimento pela localização.
