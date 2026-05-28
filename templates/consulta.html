@@ -1,0 +1,105 @@
+{% extends "base.html" %}
+{% block conteudo %}
+<div class="row justify-content-center">
+<div class="col-lg-8 col-md-10 col-sm-12">
+<div class="card shadow-sm mb-4">
+<div class="card-header fw-bold">Comparar Preço</div>
+<div class="card-body">
+<form method="post" class="row g-2">
+<div class="col-12 col-md-9">
+<input class="form-control form-control-lg" name="codigo" value="{{ codigo }}" placeholder="Leia o código de barras" autofocus>
+</div>
+<div class="col-12 d-grid mt-2">
+<button type="button" id="btn-scan" class="btn btn-outline-primary">Ler código pela câmera</button>
+</div>
+<div class="col-12 col-md-3 d-grid">
+<button type="submit" class="btn btn-success btn-lg">Comparar</button>
+</div>
+</form>
+
+<div id="reader" style="width:100%; max-width:400px; margin:20px auto; display:none;"></div>
+
+{% if message_type == "danger" %}
+<div class="alert alert-danger mt-3 mb-0" role="alert">
+{{ message_text|safe }}
+</div>
+{% endif %}
+{% if message_type == "info" %}
+<div class="alert alert-info mt-3 mb-0" role="alert">
+{{ message_text|safe }}
+</div>
+{% endif %}
+{% if message_type == "success" %}
+<div class="alert alert-success mt-3 mb-0" role="alert">
+{{ message_text|safe }}
+</div>
+{% endif %}
+{% if descricao %}
+<div class="alert alert-info mt-3 mb-0" role="alert">
+{{ descricao|safe }}
+</div>
+{% endif %}
+</div>
+
+</div>
+
+<div class="d-flex justify-content-between align-items-center mt-4">
+
+</div>
+</div>
+</div>
+<script src="{{ url_for('static', filename='js/html5-qrcode.min.js') }}"></script>
+<script>
+const btn = document.getElementById("btn-scan")
+const readerDiv = document.getElementById("reader")
+const input = document.querySelector('input[name="codigo"]')
+let scanner = null
+let cameraOn = false
+
+btn.addEventListener("click", () => {
+  if (cameraOn) {
+    stopScanner()
+    return
+  }
+
+  readerDiv.style.display = "block"
+  scanner = new Html5Qrcode("reader")
+
+  scanner.start(
+    { facingMode: "environment" },
+    {
+      fps: 10,
+      qrbox: 250,
+      formatsToSupport: [
+        Html5QrcodeSupportedFormats.EAN_13,
+        Html5QrcodeSupportedFormats.EAN_8,
+        Html5QrcodeSupportedFormats.CODE_128,
+        Html5QrcodeSupportedFormats.UPC_A,
+        Html5QrcodeSupportedFormats.UPC_E
+      ]
+    },
+    (decodedText) => {
+      input.value += decodedText
+      stopScanner()
+      //input.form.submit()
+    }
+  )
+
+  cameraOn = true
+  btn.textContent = "Desligar câmera"
+})
+
+function stopScanner() {
+  if (scanner) {
+    scanner.stop().then(() => {
+      scanner.clear()
+      readerDiv.style.display = "none"
+      cameraOn = false
+      btn.textContent = "Ler código pela câmera"
+    })
+  }
+}
+</script>
+
+{% endblock %}
+

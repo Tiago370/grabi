@@ -32,3 +32,20 @@ create table pack(
     foreign key(produto_id) references produto(id)
 );
 
+create table estabelecimento(
+    id integer primary key autoincrement,
+    nome text,
+    endereco text,
+    latitude real,
+    longitude real
+);
+
+create table input(
+    id integer primary key autoincrement,
+    estabelecimento_id integer,
+    produto_id integer,
+    criado_em integer,
+    preco real,
+    foreign key(produto_id) references produto(id),
+    foreign key(estabelecimento_id) references estabelecimento(id)
+);
