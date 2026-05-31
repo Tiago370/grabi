@@ -34,6 +34,7 @@ create table pack(
 
 create table estabelecimento(
     id integer primary key autoincrement,
+    cnpj text not null unique,
     nome text,
     endereco text,
     latitude real,

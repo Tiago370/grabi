@@ -12,6 +12,7 @@ def estabelecimento():
             endereco=request.form["endereco"]
             latitude=request.form["latitude"]
             longitude=request.form.get("longitude")
-            c.execute("insert into estabelecimento(nome,endereco,latitude,longitude) values(?,?,?,?)",(nome,endereco,latitude,longitude))
+            cnpj=request.form.get("cnpj")
+            c.execute("insert into estabelecimento(nome,endereco,latitude,longitude,cnpj) values(?,?,?,?,?)",(nome,endereco,latitude,longitude,cnpj))
             conn.commit();conn.close();return redirect("/")
     return render_template("estabelecimento.html")
