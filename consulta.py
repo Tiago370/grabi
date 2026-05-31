@@ -52,8 +52,15 @@ def consulta():
                 )
         if request.form.get("acao") == "consultar_preco":
             codigo=request.form.get("codigo")
+            conn=db();cur=conn.cursor()
+            cur.execute("SELECT id, codigo, descricao FROM produto WHERE codigo = ?", (codigo,))
+            produto = cur.fetchone()
+            conn.close()
+            if not produto:
+                return render_template("produto_nao_cadastrado.html")
+
             cnpj=session["estabelecimento_cnpj"]
             print(f">>> cnpj: {cnpj}, codigo: {codigo}", flush=True)
     if not session.get("estabelecimento_cnpj"):
         return render_template("set_estabelecimento.html")
-    return render_template("consulta.html", descricao=descricao,codigo=codigo)
+    return render_template("consulta.html")
