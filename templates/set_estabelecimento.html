@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+{% block conteudo %}
+<div class="row justify-content-center">
+<div class="col-lg-8 col-md-10 col-sm-12">
+<div class="card shadow-sm mb-4">
+<div class="card-header fw-bold">Atualizar Estabelecimento</div>
+<div class="card-body">
+
+<form method="post" class="row g-2" id="form-estabelecimento">
+
+<input type="hidden" name="acao" value="atualizar_estabelecimento">
+<input type="hidden" name="latitude" id="latitude">
+<input type="hidden" name="longitude" id="longitude">
+
+<div class="col-12 col-md-3 d-grid">
+<button type="submit" class="btn btn-success btn-lg" id="btn-atualizar">
+Atualizar Estabelecimento
+</button>
+</div>
+
+</form>
+
+</div>
+</div>
+</div>
+</div>
+
+<script>
+document.getElementById("form-estabelecimento").addEventListener("submit",function(e){
+e.preventDefault();
+
+if(!navigator.geolocation){
+alert("Geolocalização não suportada pelo navegador.");
+return;
+}
+
+navigator.geolocation.getCurrentPosition(
+function(pos){
+document.getElementById("latitude").value=pos.coords.latitude;
+document.getElementById("longitude").value=pos.coords.longitude;
+e.target.submit();
+},
+function(err){
+alert("Não foi possível obter sua localização.");
+},
+{
+enableHighAccuracy:true,
+timeout:10000,
+maximumAge:0
+}
+);
+});
+</script>
+
+{% endblock %}
