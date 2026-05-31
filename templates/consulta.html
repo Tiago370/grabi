@@ -6,15 +6,10 @@
 <div class="card-header fw-bold">Comparar Preço</div>
 <div class="card-body">
 <form method="post" class="row g-2">
-{% if codigo %}
-<div class="col-12 col-md-9">
-<input class="form-control form-control-lg" name="codigo" value="{{ codigo }}" placeholder="Leia o código de barras" readonly>
-</div>
-{% else %}
+<input type="hidden" name="acao" value="consultar_preco">
 <div class="col-12 col-md-9">
 <input class="form-control form-control-lg" name="codigo" placeholder="Leia o código de barras" autofocus>
 </div>
-{% endif %}
 <div class="col-12 d-grid mt-2">
 <button type="button" id="btn-scan" class="btn btn-outline-primary">Ler código pela câmera</button>
 </div>
@@ -25,26 +20,6 @@
 
 <div id="reader" style="width:100%; max-width:400px; margin:20px auto; display:none;"></div>
 
-{% if message_type == "danger" %}
-<div class="alert alert-danger mt-3 mb-0" role="alert">
-{{ message_text|safe }}
-</div>
-{% endif %}
-{% if message_type == "info" %}
-<div class="alert alert-info mt-3 mb-0" role="alert">
-{{ message_text|safe }}
-</div>
-{% endif %}
-{% if message_type == "success" %}
-<div class="alert alert-success mt-3 mb-0" role="alert">
-{{ message_text|safe }}
-</div>
-{% endif %}
-{% if descricao %}
-<div class="alert alert-info mt-3 mb-0" role="alert">
-{{ descricao|safe }}
-</div>
-{% endif %}
 </div>
 
 </div>

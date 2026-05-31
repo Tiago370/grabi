@@ -2,4 +2,5 @@
 [X] Implementar o preenchimento automático dos campos latitude e longitude do estabelecimento.
 [X] Implementar um algoritmo que detecta o estabelecimento pela localização.
 [X] Colocar a coluna "CNPJ" no estabelecimento.
-[ ] Atualizar o CNPJ do estabelecimento no session.
+[X] Atualizar o CNPJ do estabelecimento no session.
+[ ] Consulta se o produto existe.

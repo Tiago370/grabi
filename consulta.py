@@ -26,7 +26,7 @@ def consulta():
 
             conn = db()
             c = conn.cursor()
-            c.execute("SELECT id,nome,endereco,latitude,longitude FROM estabelecimento")
+            c.execute("SELECT id,nome,endereco,latitude,longitude,cnpj FROM estabelecimento")
             estabelecimentos = c.fetchall()
 
             mais_proximo = None
@@ -45,10 +45,15 @@ def consulta():
                     mais_proximo = est
 
             if mais_proximo:
+                session["estabelecimento_cnpj"] = mais_proximo[5]
                 print(
-                    f"Mais próximo: {mais_proximo[1]} ({menor_distancia:.2f} km)",
+                    f"Mais próximo: {mais_proximo[5]} ({menor_distancia:.2f} km)",
                     flush=True
                 )
-    if not session.get("estabelecimento"):
+        if request.form.get("acao") == "consultar_preco":
+            codigo=request.form.get("codigo")
+            cnpj=session["estabelecimento_cnpj"]
+            print(f">>> cnpj: {cnpj}, codigo: {codigo}", flush=True)
+    if not session.get("estabelecimento_cnpj"):
         return render_template("set_estabelecimento.html")
     return render_template("consulta.html", descricao=descricao,codigo=codigo)
