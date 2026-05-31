@@ -49,18 +49,24 @@ def consulta():
                 print(
                     f"Mais próximo: {mais_proximo[5]} ({menor_distancia:.2f} km)",
                     flush=True
-                )
+              )
         if request.form.get("acao") == "consultar_preco":
             codigo=request.form.get("codigo")
+            print("código", codigo)
             conn=db();cur=conn.cursor()
             cur.execute("SELECT id, codigo, descricao FROM produto WHERE codigo = ?", (codigo,))
             produto = cur.fetchone()
-            conn.close()
+            print(produto)
             if not produto:
                 return render_template("produto_nao_cadastrado.html")
 
             cnpj=session["estabelecimento_cnpj"]
             print(f">>> cnpj: {cnpj}, codigo: {codigo}", flush=True)
+            cur.execute("SELECT id, codigo, cnpj, valor FROM preco WHERE codigo = ? and cnpj = ?", (codigo,cnpj))
+            preco = cur.fetchone()
+            if not preco:
+                return render_template("produto_nao_monitorado.html") 
+            conn.close()
     if not session.get("estabelecimento_cnpj"):
         return render_template("set_estabelecimento.html")
     return render_template("consulta.html")

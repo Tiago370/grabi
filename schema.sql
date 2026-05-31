@@ -1,8 +1,7 @@
 create table produto(
     id integer primary key autoincrement,
     codigo text not null unique,
-    descricao text,
-    preco real
+    descricao text
 );
 
 create table venda(
@@ -49,4 +48,12 @@ create table input(
     preco real,
     foreign key(produto_id) references produto(id),
     foreign key(estabelecimento_id) references estabelecimento(id)
+);
+
+CREATE TABLE preco(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    codigo TEXT NOT NULL,
+    cnpj TEXT NOT NULL,
+    valor REAL NOT NULL,
+    UNIQUE (codigo, cnpj)
 );

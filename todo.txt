@@ -3,4 +3,5 @@
 [X] Implementar um algoritmo que detecta o estabelecimento pela localização.
 [X] Colocar a coluna "CNPJ" no estabelecimento.
 [X] Atualizar o CNPJ do estabelecimento no session.
-[ ] Consulta se o produto existe.
+[X] Consulta se o produto existe.
+[ ] Criar a tabela "preco" que relaciona cnpj e codigo.
