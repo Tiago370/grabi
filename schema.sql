@@ -1,6 +1,6 @@
 create table produto(
     id integer primary key autoincrement,
-    codigo text unique,
+    codigo text not null unique,
     descricao text,
     preco real
 );

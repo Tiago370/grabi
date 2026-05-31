@@ -13,9 +13,6 @@
 <div class="col-md-5">
 <input class="form-control" name="descricao" placeholder="Descrição" value="{{ produto_edicao[2] if produto_edicao else '' }}" >
 </div>
-<div class="col-md-3">
-<input class="form-control" name="preco" placeholder="Preço" step="0.01" value="{{ produto_edicao[3] if produto_edicao else '' }}" >
-</div>
 <div class="col-12 d-flex flex-column gap-2">
   <button type="submit" name="acao" value="consultar" class="btn btn-info w-100">Consultar</button>
   <button type="submit" name="acao" value="salvar" class="btn btn-primary w-100">Salvar</button>
@@ -37,7 +34,6 @@
 <tr>
 <th>Código</th>
 <th>Descrição</th>
-<th class="text-end">Preço</th>
 </tr>
 </thead>
 
@@ -46,7 +42,6 @@
 <tr onclick="window.location='{{ url_for('produto.produtos', editar_id=p[0]) }}'" style="cursor:pointer;">
 <td>{{ p[1] }}</td>
 <td>{{ p[2] }}</td>
-<td class="text-end">R$ {{ "%.2f"|format(p[3])|replace(".",",") }}</td>
 </tr>
 {% endfor %}
 </tbody>

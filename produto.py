@@ -5,7 +5,7 @@ produto_bp = Blueprint("produto", __name__)
 
 def buscar_produto_por_id(id):
     conn=db();cur=conn.cursor()
-    cur.execute("SELECT id, codigo, descricao, preco FROM produto WHERE id = ?", (id,))
+    cur.execute("SELECT id, codigo, descricao FROM produto WHERE id = ?", (id,))
     produto = cur.fetchone()
     conn.close()
     return produto
@@ -23,7 +23,6 @@ def produtos():
         acao=request.form["acao"]
         codigo=request.form["codigo"]
         descricao=request.form["descricao"]
-        preco=request.form.get("preco")
         if acao=="consultar":
             if codigo:
                 filtros.append("codigo LIKE ?");valores.append(f"%{codigo}%")
@@ -33,9 +32,9 @@ def produtos():
             c.execute("select id from produto where codigo=?",(codigo,))
             produto=c.fetchone()
             if produto:
-                c.execute("update produto set descricao=?,preco=? where codigo=?",(descricao,preco,codigo))
+                c.execute("update produto set descricao=? where codigo=?",(descricao,codigo))
             else:
-                c.execute("insert into produto(codigo,descricao,preco) values(?,?,?)",(codigo,descricao,preco))
+                c.execute("insert into produto(codigo,descricao) values(?,?)",(codigo,descricao))
             conn.commit();conn.close();return redirect("/produtos")
 
         elif acao=="deletar":
@@ -53,7 +52,7 @@ def produtos():
 @produto_bp.route("/produto/<codigo>")
 def produto(codigo):
     conn=db();cur=conn.cursor()
-    cur.execute("SELECT id, codigo, descricao, preco FROM produto WHERE codigo = ?", (codigo,))
+    cur.execute("SELECT id, codigo, descricao FROM produto WHERE codigo = ?", (codigo,))
     produto = cur.fetchone()
     conn.close()
-    return {"nome": produto[2], "preco": produto[3]}
+    return {"nome": produto[2]}
