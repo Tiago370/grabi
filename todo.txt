@@ -4,4 +4,8 @@
 [X] Colocar a coluna "CNPJ" no estabelecimento.
 [X] Atualizar o CNPJ do estabelecimento no session.
 [X] Consulta se o produto existe.
-[ ] Criar a tabela "preco" que relaciona cnpj e codigo.
+[X] Criar a tabela "preco" que relaciona cnpj e codigo.
+[X] Criar tela de primeiro monitoramento.
+[ ] Criar tela de validação de preço.
+[ ] Criar tela de atualização de preço.
+[ ] Criar tela de feedback da atualização do preço.

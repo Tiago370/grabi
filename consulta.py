@@ -65,8 +65,26 @@ def consulta():
             cur.execute("SELECT id, codigo, cnpj, valor FROM preco WHERE codigo = ? and cnpj = ?", (codigo,cnpj))
             preco = cur.fetchone()
             if not preco:
-                return render_template("produto_nao_monitorado.html") 
+                session["codigo"] = codigo
+                return render_template("produto_nao_monitorado.html", codigo=codigo) 
+            
             conn.close()
+        if request.form.get("acao") == "cadastrar_preco":
+            valor=request.form.get("preco")
+            codigo=session["codigo"]
+            cnpj=session["estabelecimento_cnpj"]
+            conn=db();cur=conn.cursor()
+            cur.execute(
+                """
+                INSERT INTO preco (codigo, cnpj, valor)
+                VALUES (?, ?, ?)
+                ON CONFLICT(codigo, cnpj)
+                DO UPDATE SET valor = excluded.valor
+                """,
+                (codigo, cnpj, valor)
+            )
+            conn.commit()
+
     if not session.get("estabelecimento_cnpj"):
         return render_template("set_estabelecimento.html")
     return render_template("consulta.html")

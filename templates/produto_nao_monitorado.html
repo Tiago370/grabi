@@ -1,14 +1,64 @@
 {% extends "base.html" %}
 {% block conteudo %}
+
 <div class="row justify-content-center">
-<div class="col-lg-8 col-md-10 col-sm-12">
-<div class="card shadow-sm mb-4">
-<div class="card-header fw-bold">Produto Não Monitorado</div>
-<div class="card-body">
-<h1>O produto que você tentou consultar ainda não foi monitorado nesse estabelecimento.</h1>
-</div>
-</div>
-</div>
+    <div class="col-12 col-md-8 col-lg-6">
+
+        <div class="card shadow-sm border-0 mt-3">
+            <div class="card-body p-4 text-center">
+
+                <div class="display-4 mb-3">🛒</div>
+
+                <h2 class="fw-bold mb-3">
+                    Produto ainda não monitorado
+                </h2>
+
+                <p class="text-muted mb-4">
+                    Este produto ainda não possui preços cadastrados neste estabelecimento.
+                </p>
+
+                <div class="alert alert-success text-start">
+                    <strong>Você pode ajudar!</strong><br>
+                    Seja o primeiro usuário a informar o preço visto na gôndola. Sua contribuição ajudará outras pessoas a economizarem.
+                </div>
+
+                <form method="post" class="mt-4">
+
+                    <input type="hidden" name="acao" value="cadastrar_preco">
+
+                    <div class="mb-3 text-start">
+                        <label class="form-label fw-semibold">
+                            Qual o preço exibido na gôndola?
+                        </label>
+
+                        <div class="input-group input-group-lg">
+                            <span class="input-group-text">R$</span>
+                            <input
+                                type="number"
+                                class="form-control"
+                                name="preco"
+                                step="0.01"
+                                min="0"
+                                placeholder="0,00"
+                                required
+                                autofocus>
+                        </div>
+
+                        <div class="form-text">
+                            Digite exatamente o valor que você está vendo no supermercado.
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn btn-success btn-lg w-100">
+                        Registrar preço
+                    </button>
+
+                </form>
+
+            </div>
+        </div>
+
+    </div>
 </div>
 
 {% endblock %}
