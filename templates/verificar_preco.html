@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+{% block conteudo %}
+
+<div class="row justify-content-center">
+    <div class="col-12 col-md-8 col-lg-6">
+
+        <div class="card shadow-sm border-0 mt-3">
+            <div class="card-body p-4 text-center">
+
+                <div class="display-4 mb-3">🏷️</div>
+
+                <h2 class="fw-bold mb-3">
+                    Confirmar preço do produto
+                </h2>
+
+                <div class="alert alert-secondary">
+                    📍 Você está comprando em <strong>{{ estabelecimento }}</strong>
+                </div>
+                <p class="text-muted mb-2">
+                    Produto identificado:
+                </p>
+
+                <h4 class="fw-semibold mb-4">
+                    {{ produto }}
+                </h4>
+
+                <div class="alert alert-info">
+                    O último preço registrado neste estabelecimento foi:
+                    <div class="fs-2 fw-bold mt-2">
+                        R$ {{ "%.2f"|format(preco) }}
+                    </div>
+                </div>
+
+                <p class="mb-4">
+                    Este preço ainda continua o mesmo?
+                </p>
+
+                <form method="post" class="d-grid gap-3">
+
+                    <input type="hidden" name="acao" value="verificar_preco">
+
+                    <button
+                        type="submit"
+                        name="resposta"
+                        value="sim"
+                        class="btn btn-success btn-lg">
+                        ✅ Sim, continua o mesmo
+                    </button>
+
+                    <button
+                        type="submit"
+                        name="resposta"
+                        value="nao"
+                        class="btn btn-danger btn-lg">
+                        ❌ Não, o preço mudou
+                    </button>
+
+                </form>
+
+            </div>
+        </div>
+
+    </div>
+</div>
+
+{% endblock %}

@@ -46,6 +46,7 @@ def consulta():
 
             if mais_proximo:
                 session["estabelecimento_cnpj"] = mais_proximo[5]
+                session["estabelecimento_nome"] = mais_proximo[1]
                 print(
                     f"Mais próximo: {mais_proximo[5]} ({menor_distancia:.2f} km)",
                     flush=True
@@ -64,10 +65,11 @@ def consulta():
             print(f">>> cnpj: {cnpj}, codigo: {codigo}", flush=True)
             cur.execute("SELECT id, codigo, cnpj, valor FROM preco WHERE codigo = ? and cnpj = ?", (codigo,cnpj))
             preco = cur.fetchone()
+            session["codigo"] = codigo
             if not preco:
-                session["codigo"] = codigo
-                return render_template("produto_nao_monitorado.html", codigo=codigo) 
-            
+                return render_template("produto_nao_monitorado.html") 
+            else:
+                return render_template("verificar_preco.html",preco=preco[3],produto=produto[2],estabelecimento=session["estabelecimento_nome"])
             conn.close()
         if request.form.get("acao") == "cadastrar_preco":
             valor=request.form.get("preco")
@@ -85,6 +87,6 @@ def consulta():
             )
             conn.commit()
 
-    if not session.get("estabelecimento_cnpj"):
+    if not session.get("estabelecimento_cnpj") or not session.get("estabelecimento_nome"):
         return render_template("set_estabelecimento.html")
     return render_template("consulta.html")

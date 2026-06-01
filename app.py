@@ -11,7 +11,7 @@ from consulta import consulta_bp
 from estabelecimento import estabelecimento_bp
 
 app=Flask(__name__)
-app.secret_key="pdv8"
+app.secret_key="grabi"
 
 init_db()
 
