@@ -51,6 +51,10 @@ def consulta():
                     f"Mais próximo: {mais_proximo[5]} ({menor_distancia:.2f} km)",
                     flush=True
               )
+
+        if request.form.get("acao") == "go_atualizar_estabelecimento":
+            return render_template("set_estabelecimento.html")
+
         if request.form.get("acao") == "consultar_preco":
             codigo=request.form.get("codigo")
             print("código", codigo)
@@ -86,6 +90,13 @@ def consulta():
                 (codigo, cnpj, valor)
             )
             conn.commit()
+
+    if request.form.get("acao") == "verificar_preco":
+        resposta=request.form.get("resposta")
+        if resposta == "sim":
+            pass #mostrar comparação
+        elif resposta == "nao":
+            pass # mostrar tela de atualizaça de preço
 
     if not session.get("estabelecimento_cnpj") or not session.get("estabelecimento_nome"):
         return render_template("set_estabelecimento.html")
