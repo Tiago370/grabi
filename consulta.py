@@ -89,4 +89,4 @@ def consulta():
 
     if not session.get("estabelecimento_cnpj") or not session.get("estabelecimento_nome"):
         return render_template("set_estabelecimento.html")
-    return render_template("consulta.html")
+    return render_template("consulta.html",estabelecimento=session["estabelecimento_nome"])

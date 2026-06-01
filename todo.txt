@@ -6,6 +6,8 @@
 [X] Consulta se o produto existe.
 [X] Criar a tabela "preco" que relaciona cnpj e codigo.
 [X] Criar tela de primeiro monitoramento.
-[ ] Criar tela de validação de preço.
+[X] Criar tela de validação de preço.
 [ ] Criar tela de atualização de preço.
 [ ] Criar tela de feedback da atualização do preço.
+[ ] Colocar estabelecimento na tela de consulta.
+[ ] Colocar botão de atualizar estabelecimento na tela de consulta.
