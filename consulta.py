@@ -3,6 +3,36 @@ from utils import db, calcular_total
 from math import radians, sin, cos, sqrt, atan2
 consulta_bp = Blueprint("consulta", __name__)
 
+def get_estabelecimento(latitude, longitude):
+    def haversine(lat1, lon1, lat2, lon2):
+        R = 6371.0
+        dlat = radians(lat2 - lat1)
+        dlon = radians(lon2 - lon1)
+        a = sin(dlat / 2) ** 2 + cos(radians(lat1)) * cos(radians(lat2)) * sin(dlon / 2) ** 2
+        c = 2 * atan2(sqrt(a), sqrt(1 - a))
+        return R * c
+
+    conn = db()
+    c = conn.cursor()
+    c.execute("SELECT id,nome,endereco,latitude,longitude,cnpj FROM estabelecimento")
+    estabelecimentos = c.fetchall()
+
+    mais_proximo = None
+    menor_distancia = float("inf")
+
+    for est in estabelecimentos:
+        distancia = haversine(latitude,longitude,est[3],est[4])
+        if distancia < menor_distancia:
+            menor_distancia = distancia
+            mais_proximo = est
+
+    if mais_proximo:
+        estabelecimento = {}
+        estabelecimento["cnpj"] = mais_proximo[5]
+        estabelecimento["nome"] = mais_proximo[1]
+        return estabelecimento
+    return False
+
 @consulta_bp.route("/consulta",methods=["GET","POST"])
 @consulta_bp.route("/consulta/",methods=["GET","POST"])
 def consulta():
@@ -14,43 +44,10 @@ def consulta():
         if request.form.get("acao") == "atualizar_estabelecimento":
             latitude=float(request.form.get("latitude"))
             longitude=float(request.form.get("longitude"))
-            print(f">>> {latitude}, {longitude}", flush=True)
-
-            def haversine(lat1, lon1, lat2, lon2):
-                R = 6371.0
-                dlat = radians(lat2 - lat1)
-                dlon = radians(lon2 - lon1)
-                a = sin(dlat / 2) ** 2 + cos(radians(lat1)) * cos(radians(lat2)) * sin(dlon / 2) ** 2
-                c = 2 * atan2(sqrt(a), sqrt(1 - a))
-                return R * c
-
-            conn = db()
-            c = conn.cursor()
-            c.execute("SELECT id,nome,endereco,latitude,longitude,cnpj FROM estabelecimento")
-            estabelecimentos = c.fetchall()
-
-            mais_proximo = None
-            menor_distancia = float("inf")
-
-            for est in estabelecimentos:
-                distancia = haversine(
-                    latitude,
-                    longitude,
-                    est[3],
-                    est[4]
-                )
-
-                if distancia < menor_distancia:
-                    menor_distancia = distancia
-                    mais_proximo = est
-
-            if mais_proximo:
-                session["estabelecimento_cnpj"] = mais_proximo[5]
-                session["estabelecimento_nome"] = mais_proximo[1]
-                print(
-                    f"Mais próximo: {mais_proximo[5]} ({menor_distancia:.2f} km)",
-                    flush=True
-              )
+            estabelecimento = get_estabelecimento(latitude,longitude)
+            if estabelecimento:
+                session["estabelecimento_cnpj"] = estabelecimento["cnpj"]
+                session["estabelecimento_nome"] = estabelecimento["nome"]
 
         if request.form.get("acao") == "go_atualizar_estabelecimento":
             return render_template("set_estabelecimento.html")
