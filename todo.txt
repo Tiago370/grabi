@@ -11,3 +11,4 @@
 [ ] Criar tela de feedback da atualização do preço.
 [ ] Colocar estabelecimento na tela de consulta.
 [ ] Colocar botão de atualizar estabelecimento na tela de consulta.
+[ ] Colocar uma animação de "loading" e esconder o botão na hora fe atualizar estabelecimebto

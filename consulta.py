@@ -94,9 +94,33 @@ def consulta():
     if request.form.get("acao") == "verificar_preco":
         resposta=request.form.get("resposta")
         if resposta == "sim":
-            pass #mostrar comparação
+            #mostrar comparação
+            conn=db();cur=conn.cursor()
+            codigo=session["codigo"]
+            cnpj=session["estabelecimento_cnpj"]
+            cur.execute("SELECT id, codigo, descricao FROM produto WHERE codigo = ?", (codigo,))
+            produto = cur.fetchone()
+            produto_descricao = produto[2]
+            #buscar todos os preços
+            cur.execute("SELECT e.nome,e.endereco,p.valor FROM estabelecimento e INNER JOIN preco p ON e.cnpj = p.cnpj WHERE p.codigo = ?", (codigo,))
+            precos = cur.fetchall()
+            print(precos)
+            lista_precos = []
+            for preco in precos:
+                estabelecimento = preco[0]
+                endereco = preco[1]
+                valor = preco[2]
+                preco_obj ={"estabelecimento":estabelecimento,"endereco":endereco,"preco":valor}
+                lista_precos.append(preco_obj)
+            print(lista_precos)
+            return render_template("comparacao_preco.html",precos=lista_precos)
+            
         elif resposta == "nao":
-            pass # mostrar tela de atualizaça de preço
+            # mostrar tela de atualizaça de preço
+            conn=db();cur=conn.cursor()
+            codigo=session["codigo"]
+            #cur.execute("SELECT id, codigo, cnpj, valor FROM preco WHERE codigo = ?", (codigo,))
+            #precos = cur.fetchoneA()
 
     if not session.get("estabelecimento_cnpj") or not session.get("estabelecimento_nome"):
         return render_template("set_estabelecimento.html")

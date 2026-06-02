@@ -1,0 +1,108 @@
+{% extends "base.html" %}
+{% block conteudo %}
+
+<div class="row justify-content-center">
+    <div class="col-12 col-lg-8">
+
+        <div class="card shadow-sm border-0 mt-3">
+            <div class="card-body p-4">
+
+                <div class="text-center">
+
+                    <div class="display-4 mb-3">📊</div>
+
+                    <h2 class="fw-bold mb-3">
+                        Comparação de preços
+                    </h2>
+
+                    <p class="text-muted">
+                        Confira onde este produto está mais barato perto de você.
+                    </p>
+
+                    <div class="alert alert-primary">
+                        🛒 <strong>{{ produto }}</strong>
+                    </div>
+
+                </div>
+
+                {% if precos %}
+
+                {% set menor_preco = precos|map(attribute='preco')|min %}
+
+                <div class="mt-4">
+
+                    {% for item in precos %}
+
+                    <div class="card mb-3 border-0 shadow-sm">
+
+                        <div class="card-body">
+
+                            <div class="d-flex justify-content-between align-items-start flex-wrap">
+
+                                <div>
+
+                                    <h5 class="fw-bold mb-1">
+                                        {% if item.preco == menor_preco %}
+                                        🏆 {{ item.estabelecimento }}
+                                        {% else %}
+                                        🏪 {{ item.estabelecimento }}
+                                        {% endif %}
+                                    </h5>
+
+                                    <div class="text-muted">
+                                        📍 {{ item.endereco }}
+                                    </div>
+
+                                </div>
+
+                                <div class="text-end">
+
+                                    <div class="fs-3 fw-bold text-success">
+                                        R$ {{ "%.2f"|format(item.preco) }}
+                                    </div>
+
+                                    {% if item.preco == menor_preco %}
+                                    <span class="badge bg-success">
+                                        Melhor preço
+                                    </span>
+                                    {% endif %}
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    {% endfor %}
+
+                </div>
+
+                <div class="alert alert-success mt-4 text-center">
+
+                    <div class="fs-5">
+                        💰 Menor preço encontrado
+                    </div>
+
+                    <div class="fs-2 fw-bold">
+                        R$ {{ "%.2f"|format(menor_preco) }}
+                    </div>
+
+                </div>
+
+                {% else %}
+
+                <div class="alert alert-warning text-center mt-4">
+                    Nenhum preço foi encontrado para este produto.
+                </div>
+
+                {% endif %}
+
+            </div>
+        </div>
+
+    </div>
+</div>
+
+{% endblock %}
