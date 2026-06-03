@@ -10,8 +10,8 @@
 [X] Colocar estabelecimento na tela de consulta.
 [X] Colocar botão de atualizar estabelecimento na tela de consulta.
 [X] Criar o wraper "render_page".
+[X] Tornar a detrcção de estabelecimento automática.
+[X] Refotorar o consulta.py
 [ ] Criar tela de atualização de preço.
 [ ] Criar tela de feedback da atualização do preço.
 [ ] Colocar uma animação de "loading" e esconder o botão na hora fe atualizar estabelecimebto
-[ ] Tornar a detrcção de estabelecimento automática.
-[ ] Refotorar o consulta.py

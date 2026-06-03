@@ -1,4 +1,4 @@
-import sqlite3,os
+import sqlite3, os, time
 from flask import session, render_template
 from math import radians, sin, cos, sqrt, atan2
 
@@ -19,9 +19,20 @@ def init_db():
 def calcular_total():
     return sum(i["sub_total"] for i in session["itens"])
 
-def render_page(template, **kwargs):
-    contexto = {}
+def necessita_atualizar_estabelecimento():
+    timestamp = session.get("timestamp_localizacao")
+    print(">>> timestamp: ",timestamp)
+    if timestamp is None:
+        return True
+    if time.time() - timestamp > 5*60:
+        return True
+    return False
 
+def render_page(template, **kwargs):
+    contexto = {
+        "atualizar_estabelecimento": necessita_atualizar_estabelecimento()
+    }
+    print(contexto)
     return render_template(
         template,
         **contexto,

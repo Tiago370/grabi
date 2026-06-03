@@ -1,9 +1,7 @@
+import time
 from flask import Blueprint, render_template, redirect, request, session
 from utils import db, render_page, get_estabelecimento
 consulta_bp = Blueprint("consulta", __name__)
-
-def necessita_atualizar_estabelecimento():
-    return True
 
 @consulta_bp.route("/consulta",methods=["GET","POST"])
 @consulta_bp.route("/consulta/",methods=["GET","POST"])
@@ -85,6 +83,7 @@ def consulta():
 
     if not session.get("estabelecimento_cnpj") or not session.get("estabelecimento_nome"):
         return render_page("set_estabelecimento.html")
+    print('>>> Chamando render_page("consulta.html"...')
     return render_page("consulta.html",estabelecimento=session["estabelecimento_nome"])
 
 @consulta_bp.route("/atualizar_estabelecimento",methods=["POST"])
@@ -96,6 +95,7 @@ def atualizar_estabelecimento():
     if estabelecimento:
         session["estabelecimento_cnpj"] = estabelecimento["cnpj"]
         session["estabelecimento_nome"] = estabelecimento["nome"]
+        session["timestamp_localizacao"] = time.time() 
 
     return "", 204
 	

@@ -17,7 +17,7 @@
 {% block conteudo %}{% endblock %}
 </div>
 <script>
-const atualizarLocalizacao = true;
+const atualizarLocalizacao = {{ atualizar_estabelecimento|tojson }};
 
 if (atualizarLocalizacao) {
     navigator.geolocation.getCurrentPosition(function(pos) {
