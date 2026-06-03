@@ -86,3 +86,16 @@ def consulta():
     if not session.get("estabelecimento_cnpj") or not session.get("estabelecimento_nome"):
         return render_page("set_estabelecimento.html")
     return render_page("consulta.html",estabelecimento=session["estabelecimento_nome"])
+
+@consulta_bp.route("/atualizar_estabelecimento",methods=["POST"])
+def atualizar_estabelecimento():
+    dados = request.get_json()
+    latitude = dados["latitude"]
+    longitude= dados["longitude"]
+    estabelecimento = get_estabelecimento(latitude,longitude)
+    if estabelecimento:
+        session["estabelecimento_cnpj"] = estabelecimento["cnpj"]
+        session["estabelecimento_nome"] = estabelecimento["nome"]
+
+    return "", 204
+	

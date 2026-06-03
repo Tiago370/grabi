@@ -16,6 +16,22 @@
 <div class="container mt-4">
 {% block conteudo %}{% endblock %}
 </div>
+<script>
+const atualizarLocalizacao = true;
+
+if (atualizarLocalizacao) {
+    navigator.geolocation.getCurrentPosition(function(pos) {
+        fetch("/atualizar_estabelecimento", {
+            method: "POST",
+            headers: {"Content-Type": "application/json"},
+            body: JSON.stringify({
+                latitude: pos.coords.latitude,
+                longitude: pos.coords.longitude
+            })
+        });
+    });
+}
+</script>
 <script src="{{ url_for('static', filename='bootstrap/js/bootstrap.bundle.min.js') }}"></script>
 </body>
 </body>
