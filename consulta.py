@@ -33,6 +33,18 @@ def get_estabelecimento(latitude, longitude):
         return estabelecimento
     return False
 
+def necessita_atualizar_estabelecimento():
+    return True
+
+def render_page(template, **kwargs):
+    contexto = {}
+
+    return render_template(
+        template,
+        **contexto,
+        **kwargs
+    )
+
 @consulta_bp.route("/consulta",methods=["GET","POST"])
 @consulta_bp.route("/consulta/",methods=["GET","POST"])
 def consulta():
@@ -50,7 +62,7 @@ def consulta():
                 session["estabelecimento_nome"] = estabelecimento["nome"]
 
         if request.form.get("acao") == "go_atualizar_estabelecimento":
-            return render_template("set_estabelecimento.html")
+            return render_page("set_estabelecimento.html")
 
         if request.form.get("acao") == "consultar_preco":
             codigo=request.form.get("codigo")
@@ -60,7 +72,7 @@ def consulta():
             produto = cur.fetchone()
             print(produto)
             if not produto:
-                return render_template("produto_nao_cadastrado.html")
+                return render_page("produto_nao_cadastrado.html")
 
             cnpj=session["estabelecimento_cnpj"]
             print(f">>> cnpj: {cnpj}, codigo: {codigo}", flush=True)
@@ -68,9 +80,9 @@ def consulta():
             preco = cur.fetchone()
             session["codigo"] = codigo
             if not preco:
-                return render_template("produto_nao_monitorado.html") 
+                return render_page("produto_nao_monitorado.html") 
             else:
-                return render_template("verificar_preco.html",preco=preco[3],produto=produto[2],estabelecimento=session["estabelecimento_nome"])
+                return render_page("verificar_preco.html",preco=preco[3],produto=produto[2],estabelecimento=session["estabelecimento_nome"])
             conn.close()
         if request.form.get("acao") == "cadastrar_preco":
             valor=request.form.get("preco")
@@ -110,7 +122,7 @@ def consulta():
                 preco_obj ={"estabelecimento":estabelecimento,"endereco":endereco,"preco":valor}
                 lista_precos.append(preco_obj)
             print(lista_precos)
-            return render_template("comparacao_preco.html",precos=lista_precos)
+            return render_page("comparacao_preco.html",precos=lista_precos)
             
         elif resposta == "nao":
             # mostrar tela de atualizaça de preço
@@ -120,5 +132,5 @@ def consulta():
             #precos = cur.fetchoneA()
 
     if not session.get("estabelecimento_cnpj") or not session.get("estabelecimento_nome"):
-        return render_template("set_estabelecimento.html")
-    return render_template("consulta.html",estabelecimento=session["estabelecimento_nome"])
+        return render_page("set_estabelecimento.html")
+    return render_page("consulta.html",estabelecimento=session["estabelecimento_nome"])
