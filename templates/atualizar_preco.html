@@ -13,10 +13,6 @@
                     Preço mudou?
                 </h2>
 
-                <p class="text-muted mb-4">
-                    Outro usuário informou recentemente o preço deste produto, mas você indicou que encontrou um valor diferente.
-                </p>
-
                 <div class="alert alert-warning text-start">
                     <div class="fw-bold mb-2">
                         Último preço registrado
@@ -30,10 +26,10 @@
                         Informado pela comunidade
                     </div>
                 </div>
-
+                <div id="comparacao" class="alert d-none"></div
                 <div class="alert alert-success text-start">
-                    <strong>Ajude a manter os dados atualizados!</strong><br>
-                    Informe o valor que está vendo agora na gôndola para que outras pessoas tenham acesso a informações mais precisas.
+                    <strong>Nos ajude a te ajudar!</strong><br>
+                    Informe o preço que está na gôndola, assim podemos comparar com o preço de outros supermercados.
                 </div>
 
                 <form method="post" class="mt-4">
@@ -50,6 +46,7 @@
                             <span class="input-group-text">R$</span>
 
                             <input
+                                id="novo_preco"
                                 type="number"
                                 class="form-control"
                                 name="novo_preco"
@@ -87,4 +84,52 @@
     </div>
 </div>
 
+<script>
+const precoAtual = Number("{{ preco_atual }}");
+const campoPreco = document.getElementById("novo_preco");
+const comparacao = document.getElementById("comparacao");
+
+campoPreco.addEventListener("input", () => {
+    const novoPreco = parseFloat(campoPreco.value);
+
+    if (isNaN(novoPreco)) {
+        comparacao.classList.add("d-none");
+        return;
+    }
+
+    const diferenca = novoPreco - precoAtual;
+
+    if (diferenca === 0) {
+        comparacao.className = "alert alert-secondary";
+        comparacao.innerHTML = `
+            <div class="text-center">
+                Mesmo preço registrado anteriormente.
+            </div>
+        `;
+        return;
+    }
+
+    const percentual = (Math.abs(diferenca) / precoAtual) * 100;
+
+    if (diferenca > 0) {
+        comparacao.className = "alert alert-danger";
+        comparacao.innerHTML = `
+            <div class="text-center">
+                ⬆️ Aumento de
+                <strong>R$ ${diferenca.toFixed(2)}</strong>
+                (${percentual.toFixed(1)}%)
+            </div>
+        `;
+    } else {
+        comparacao.className = "alert alert-success";
+        comparacao.innerHTML = `
+            <div class="text-center">
+                ⬇️ Redução de
+                <strong>R$ ${Math.abs(diferenca).toFixed(2)}</strong>
+                (${percentual.toFixed(1)}%)
+            </div>
+        `;
+    }
+});
+</script>
 {% endblock %}

@@ -1,4 +1,4 @@
-[ ] Atualizar o readme.
+q[ ] Atualizar o readme.
 [X] Implementar o preenchimento automático dos campos latitude e longitude do estabelecimento.
 [X] Implementar um algoritmo que detecta o estabelecimento pela localização.
 [X] Colocar a coluna "CNPJ" no estabelecimento.
@@ -12,6 +12,11 @@
 [X] Criar o wraper "render_page".
 [X] Tornar a detrcção de estabelecimento automática.
 [X] Refotorar o consulta.py
-[ ] Criar tela de atualização de preço.
+[X] Criar tela de atualização de preço.
 [ ] Criar tela de feedback da atualização do preço.
 [ ] Colocar uma animação de "loading" e esconder o botão na hora fe atualizar estabelecimebto
+[ ] Implementar o conceito de admin.
+    O admin pode colocar e editar nome de produto.
+    O admin pode criar e editar estabelecimentos.
+    O admin pode ativar e desativar estabelecimentos.
+[ ] Implementar o tratamento automatico de imagens de produtos.
