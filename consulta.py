@@ -3,6 +3,24 @@ from flask import Blueprint, render_template, redirect, request, session
 from utils import db, render_page, get_estabelecimento
 consulta_bp = Blueprint("consulta", __name__)
 
+def comparacao_preco(codigo, cnpj):
+    conn=db();cur=conn.cursor()
+    #mostrar comparação
+    cur.execute("SELECT id, codigo, descricao FROM produto WHERE codigo = ?", (codigo,))
+    produto = cur.fetchone()
+    produto_descricao = produto[2]
+    #buscar todos os preços
+    cur.execute("SELECT e.nome,e.endereco,p.valor FROM estabelecimento e INNER JOIN preco p ON e.cnpj = p.cnpj WHERE p.codigo = ?", (codigo,))
+    precos = cur.fetchall()
+    lista_precos = []
+    for preco in precos:
+        estabelecimento = preco[0]
+        endereco = preco[1]
+        valor = preco[2]
+        preco_obj ={"estabelecimento":estabelecimento,"endereco":endereco,"preco":valor}
+        lista_precos.append(preco_obj)
+    return render_page("comparacao_preco.html",precos=lista_precos)
+
 @consulta_bp.route("/consulta",methods=["GET","POST"])
 @consulta_bp.route("/consulta/",methods=["GET","POST"])
 def consulta():
@@ -53,33 +71,33 @@ def consulta():
                 (codigo, cnpj, valor)
             )
             conn.commit()
+            conn.close()
 
     if request.form.get("acao") == "verificar_preco":
         resposta=request.form.get("resposta")
+        codigo=session["codigo"]
+        cnpj=session["estabelecimento_cnpj"]
         if resposta == "sim":
-            #mostrar comparação
-            codigo=session["codigo"]
-            cnpj=session["estabelecimento_cnpj"]
-            cur.execute("SELECT id, codigo, descricao FROM produto WHERE codigo = ?", (codigo,))
-            produto = cur.fetchone()
-            produto_descricao = produto[2]
-            #buscar todos os preços
-            cur.execute("SELECT e.nome,e.endereco,p.valor FROM estabelecimento e INNER JOIN preco p ON e.cnpj = p.cnpj WHERE p.codigo = ?", (codigo,))
-            precos = cur.fetchall()
-            lista_precos = []
-            for preco in precos:
-                estabelecimento = preco[0]
-                endereco = preco[1]
-                valor = preco[2]
-                preco_obj ={"estabelecimento":estabelecimento,"endereco":endereco,"preco":valor}
-                lista_precos.append(preco_obj)
-            return render_page("comparacao_preco.html",precos=lista_precos)
-            
+            return comparacao_preco(codigo, cnpj)
         elif resposta == "nao":
-            # mostrar tela de atualizaça de preço
-            codigo=session["codigo"]
-            #cur.execute("SELECT id, codigo, cnpj, valor FROM preco WHERE codigo = ?", (codigo,))
-            #precos = cur.fetchoneA()
+            cur.execute("SELECT id, codigo, cnpj, valor FROM preco WHERE codigo = ? and cnpj = ?", (codigo,cnpj))
+            produto = cur.fetchone()
+            preco_atual = produto[3]
+            return render_page("atualizar_preco.html", preco_atual=preco_atual)
+
+    if request.form.get("acao") == "atualizar_preco":
+        codigo=session["codigo"]
+        cnpj=session["estabelecimento_cnpj"]
+        novo_preco=request.form.get("novo_preco")
+        cur.execute(
+                """
+                UPDATE preco                                                                    SET valor = ?
+                WHERE codigo = ? AND cnpj = ?
+                """,
+            (novo_preco, codigo, cnpj))
+        conn.commit()
+        conn.close()
+        return comparacao_preco(codigo, cnpj) 
 
     if not session.get("estabelecimento_cnpj") or not session.get("estabelecimento_nome"):
         return render_page("set_estabelecimento.html")

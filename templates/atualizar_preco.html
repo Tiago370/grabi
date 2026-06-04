@@ -1,0 +1,90 @@
+{% extends "base.html" %}
+{% block conteudo %}
+
+<div class="row justify-content-center">
+    <div class="col-12 col-md-8 col-lg-6">
+
+        <div class="card shadow-sm border-0 mt-3">
+            <div class="card-body p-4 text-center">
+
+                <div class="display-4 mb-3">🔄</div>
+
+                <h2 class="fw-bold mb-3">
+                    Preço mudou?
+                </h2>
+
+                <p class="text-muted mb-4">
+                    Outro usuário informou recentemente o preço deste produto, mas você indicou que encontrou um valor diferente.
+                </p>
+
+                <div class="alert alert-warning text-start">
+                    <div class="fw-bold mb-2">
+                        Último preço registrado
+                    </div>
+
+                    <div class="display-6 fw-bold text-center">
+                        R$ {{ preco_atual }}
+                    </div>
+
+                    <div class="text-center small text-muted">
+                        Informado pela comunidade
+                    </div>
+                </div>
+
+                <div class="alert alert-success text-start">
+                    <strong>Ajude a manter os dados atualizados!</strong><br>
+                    Informe o valor que está vendo agora na gôndola para que outras pessoas tenham acesso a informações mais precisas.
+                </div>
+
+                <form method="post" class="mt-4">
+
+                    <input type="hidden" name="acao" value="atualizar_preco">
+
+                    <div class="mb-3 text-start">
+
+                        <label class="form-label fw-semibold">
+                            Qual é o preço atual?
+                        </label>
+
+                        <div class="input-group input-group-lg">
+                            <span class="input-group-text">R$</span>
+
+                            <input
+                                type="number"
+                                class="form-control"
+                                name="novo_preco"
+                                step="0.01"
+                                min="0"
+                                placeholder="0,00"
+                                required
+                                autofocus>
+                        </div>
+
+                        <div class="form-text">
+                            Digite exatamente o valor exibido na etiqueta ou na gôndola.
+                        </div>
+
+                    </div>
+
+                    <button type="submit" class="btn btn-success btn-lg w-100">
+                        Atualizar preço
+                    </button>
+
+                </form>
+
+                <div class="text-center mt-3">
+
+                    <a href="{{ url_for('consulta.consulta') }}"
+                       class="btn btn-outline-secondary btn-sm">
+                        Nova consulta
+                    </a>
+
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+</div>
+
+{% endblock %}
