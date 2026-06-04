@@ -19,7 +19,7 @@
                     </div>
 
                     <div class="display-6 fw-bold text-center">
-                        R$ {{ preco_atual }}
+                        R$ {{ "%.2f"|format(preco_atual)|replace(".", ",") }}
                     </div>
 
                     <div class="text-center small text-muted">
@@ -114,21 +114,21 @@ campoPreco.addEventListener("input", () => {
     if (diferenca > 0) {
         comparacao.className = "alert alert-danger";
         comparacao.innerHTML = `
-            <div class="text-center">
-                ⬆️ Aumento de
-                <strong>R$ ${diferenca.toFixed(2)}</strong>
-                (${percentual.toFixed(1)}%)
-            </div>
-        `;
+        <div class="text-center">
+            ⬆️ Aumento de
+            <strong>R$ ${diferenca.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</strong>
+            (${percentual.toFixed(1).replace('.', ',')}%)
+    </div>
+`;
     } else {
         comparacao.className = "alert alert-success";
         comparacao.innerHTML = `
-            <div class="text-center">
-                ⬇️ Redução de
-                <strong>R$ ${Math.abs(diferenca).toFixed(2)}</strong>
-                (${percentual.toFixed(1)}%)
-            </div>
-        `;
+        <div class="text-center">
+            ⬇️ Redução de
+            <strong>R$ ${Math.abs(diferenca).toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</strong>
+            (${percentual.toFixed(1).replace('.', ',')}%)
+    </div>
+`;
     }
 });
 </script>

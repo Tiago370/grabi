@@ -27,7 +27,7 @@
                 <div class="alert alert-info">
                     O último preço registrado neste estabelecimento foi:
                     <div class="fs-2 fw-bold mt-2">
-                        R$ {{ "%.2f"|format(preco) }}
+                        R$ {{ "%.2f"|format(preco)|replace(".", ",") }}
                     </div>
                 </div>
 

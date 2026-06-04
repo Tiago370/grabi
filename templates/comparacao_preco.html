@@ -58,7 +58,7 @@
                                 <div class="text-end">
 
                                     <div class="fs-3 fw-bold text-success">
-                                        R$ {{ "%.2f"|format(item.preco) }}
+                                        R$ {{ "%.2f"|format(item.preco)|replace(".", ",") }}
                                     </div>
 
                                     {% if item.preco == menor_preco %}
@@ -86,7 +86,7 @@
                     </div>
 
                     <div class="fs-2 fw-bold">
-                        R$ {{ "%.2f"|format(menor_preco) }}
+                        R$ {{ "%.2f"|format(menor_preco)|replace(".", ",") }}
                     </div>
 
                 </div>
