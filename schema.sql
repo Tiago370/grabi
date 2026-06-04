@@ -55,5 +55,6 @@ CREATE TABLE preco(
     codigo TEXT NOT NULL,
     cnpj TEXT NOT NULL,
     valor REAL NOT NULL,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     UNIQUE (codigo, cnpj)
 );

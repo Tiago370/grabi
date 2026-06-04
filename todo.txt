@@ -20,3 +20,5 @@ q[ ] Atualizar o readme.
     O admin pode criar e editar estabelecimentos.
     O admin pode ativar e desativar estabelecimentos.
 [ ] Implementar o tratamento automatico de imagens de produtos.
+[ ] Colocar o produto, preço código e as porcentagens de cada preço concorrente.
+    Se o preço do concorrente for menor e será verde, e vermelho caso o contrário.

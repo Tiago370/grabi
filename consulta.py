@@ -1,7 +1,31 @@
 import time
+from datetime import datetime, timedelta
 from flask import Blueprint, render_template, redirect, request, session
 from utils import db, render_page, get_estabelecimento
 consulta_bp = Blueprint("consulta", __name__)
+
+def tempo_decorrido(data_str):
+    data = datetime.strptime(data_str, "%Y-%m-%d %H:%M:%S")
+    data = data - timedelta(hours=3)
+    diff = datetime.now() - data
+
+    segundos = int(diff.total_seconds())
+
+    if segundos < 60:
+        return "agora mesmo"
+
+    if segundos < 3600:
+        return f"há {segundos // 60} min"
+
+    if segundos < 86400:
+        return f"há {segundos // 3600} h"
+
+    dias = segundos // 86400
+
+    if dias == 1:
+        return "ontem"
+
+    return f"há {dias} dias"
 
 def comparacao_preco(codigo, cnpj):
     conn=db();cur=conn.cursor()
@@ -10,14 +34,15 @@ def comparacao_preco(codigo, cnpj):
     produto = cur.fetchone()
     produto_descricao = produto[2]
     #buscar todos os preços
-    cur.execute("SELECT e.nome,e.endereco,p.valor FROM estabelecimento e INNER JOIN preco p ON e.cnpj = p.cnpj WHERE p.codigo = ?", (codigo,))
+    cur.execute("SELECT e.nome,e.endereco,p.valor,p.updated_at FROM estabelecimento e INNER JOIN preco p ON e.cnpj = p.cnpj WHERE p.codigo = ?", (codigo,))
     precos = cur.fetchall()
     lista_precos = []
     for preco in precos:
         estabelecimento = preco[0]
         endereco = preco[1]
         valor = preco[2]
-        preco_obj ={"estabelecimento":estabelecimento,"endereco":endereco,"preco":valor}
+        atualizado_em = tempo_decorrido(preco[3])
+        preco_obj ={"estabelecimento":estabelecimento,"endereco":endereco,"preco":valor,"atualizado_em":atualizado_em}
         lista_precos.append(preco_obj)
     return render_page("comparacao_preco.html",precos=lista_precos)
 
@@ -66,7 +91,8 @@ def consulta():
                 INSERT INTO preco (codigo, cnpj, valor)
                 VALUES (?, ?, ?)
                 ON CONFLICT(codigo, cnpj)
-                DO UPDATE SET valor = excluded.valor
+                DO UPDATE SET valor = excluded.valor,
+                updated_at = CURRENT_TIMESTAMP
                 """,
                 (codigo, cnpj, valor)
             )
@@ -91,8 +117,10 @@ def consulta():
         novo_preco=request.form.get("novo_preco")
         cur.execute(
                 """
-                UPDATE preco                                                                    SET valor = ?
-                WHERE codigo = ? AND cnpj = ?
+                UPDATE preco
+		SET valor = ?,
+    		updated_at = CURRENT_TIMESTAMP
+		WHERE codigo = ? AND cnpj = ?;
                 """,
             (novo_preco, codigo, cnpj))
         conn.commit()
@@ -101,7 +129,6 @@ def consulta():
 
     if not session.get("estabelecimento_cnpj") or not session.get("estabelecimento_nome"):
         return render_page("set_estabelecimento.html")
-    print('>>> Chamando render_page("consulta.html"...')
     return render_page("consulta.html",estabelecimento=session["estabelecimento_nome"])
 
 @consulta_bp.route("/atualizar_estabelecimento",methods=["POST"])
