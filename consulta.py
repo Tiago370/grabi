@@ -70,13 +70,13 @@ def consulta():
             codigo=request.form.get("codigo")
             cur.execute("SELECT id, codigo, descricao FROM produto WHERE codigo = ?", (codigo,))
             produto = cur.fetchone()
+            session["codigo"] = codigo
             if not produto:
                 return render_page("produto_nao_cadastrado.html")
 
             cnpj=session["estabelecimento_cnpj"]
             cur.execute("SELECT id, codigo, cnpj, valor FROM preco WHERE codigo = ? and cnpj = ?", (codigo,cnpj))
             preco = cur.fetchone()
-            session["codigo"] = codigo
             if not preco:
                 return render_page("produto_nao_monitorado.html") 
             else:
@@ -98,6 +98,31 @@ def consulta():
             )
             conn.commit()
             conn.close()
+
+        if request.form.get("acao") == "cadastrar_produto_preco":
+            valor=request.form.get("preco")
+            codigo=session["codigo"]
+            cnpj=session["estabelecimento_cnpj"]
+            cur.execute(
+                """
+                INSERT INTO produto (codigo)
+                VALUES (?)
+                """,
+                (codigo)
+            )
+            cur.execute(
+                """
+                INSERT INTO preco (codigo, cnpj, valor)
+                VALUES (?, ?, ?)
+                ON CONFLICT(codigo, cnpj)
+                DO UPDATE SET valor = excluded.valor,
+                updated_at = CURRENT_TIMESTAMP
+                """,
+                (codigo, cnpj, valor)
+            )
+            conn.commit()
+            conn.close()
+            return comparacao_preco(codigo, cnpj)
 
     if request.form.get("acao") == "verificar_preco":
         resposta=request.form.get("resposta")

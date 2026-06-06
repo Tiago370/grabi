@@ -1,14 +1,82 @@
 {% extends "base.html" %}
 {% block conteudo %}
+
 <div class="row justify-content-center">
-<div class="col-lg-8 col-md-10 col-sm-12">
-<div class="card shadow-sm mb-4">
-<div class="card-header fw-bold">Produto Não Cadastrado</div>
-<div class="card-body">
-<h1>O produto que você tentou consultar não está cadastrado.</h1>
-</div>
-</div>
-</div>
+    <div class="col-12 col-md-8 col-lg-6">
+
+        <div class="card shadow-sm border-0 mt-3">
+            <div class="card-body p-4 text-center">
+
+                <div class="display-4 mb-3">🚀</div>
+
+                <h2 class="fw-bold mb-3">
+                    Você encontrou um produto novo!
+                </h2>
+
+                <div class="alert alert-warning text-start">
+                    <div class="fw-bold mb-2">
+                        Produto ainda não cadastrado
+                    </div>
+
+                    <div>
+                        Seja a primeira pessoa a informar o preço encontrado neste estabelecimento.
+                    </div>
+                </div>
+
+                <div class="alert alert-success text-start">
+                    <strong>Seu registro já tem utilidade.</strong><br>
+                    Quando outras pessoas encontrarem este mesmo produto em outros mercados, as comparações serão feitas automaticamente.
+                </div>
+
+                <form method="post" class="mt-4">
+
+                    <input type="hidden" name="acao" value="cadastrar_produto_preco">
+
+                    <div class="mb-3 text-start">
+
+                        <label class="form-label fw-semibold">
+                            Qual é o preço deste produto?
+                        </label>
+
+                        <div class="input-group input-group-lg">
+                            <span class="input-group-text">R$</span>
+
+                            <input
+                                type="number"
+                                class="form-control"
+                                name="preco"
+                                step="0.01"
+                                min="0"
+                                placeholder="0,00"
+                                required
+                                autofocus>
+                        </div>
+
+                        <div class="form-text">
+                            Digite exatamente o valor exibido na etiqueta ou na gôndola.
+                        </div>
+
+                    </div>
+
+                    <button type="submit" class="btn btn-success btn-lg w-100">
+                        Informar preço
+                    </button>
+
+                </form>
+
+                <div class="text-center mt-3">
+
+                    <a href="{{ url_for('consulta.consulta') }}"
+                       class="btn btn-outline-secondary btn-sm">
+                        Nova consulta
+                    </a>
+
+                </div>
+
+            </div>
+        </div>
+
+    </div>
 </div>
 
 {% endblock %}
