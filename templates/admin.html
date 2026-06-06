@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block conteudo %}
+<div class="container mt-4">
+<div class="row justify-content-center">
+<div class="col-lg-8 col-md-10 col-sm-12">
+<div class="card shadow-sm">
+<div class="card-header fw-bold">Acessar como Admin</div>
+<div class="card-body">
+<form method="post" class="row g-3">
+{% if fail %}
+<div class="alert alert-danger" role="alert">
+    Senha incorreta.
+</div>
+{% endif %}
+<div class="col-md-5">
+<input type="password" class="form-control" name="senha" placeholder="Senha" >
+</div>
+<button type="submit" class="btn btn-danger w-100" >Entrar</button>
+</form>
+</div>
+</div>
+</div>
+</div>
+</div>
+{% endblock %}
+

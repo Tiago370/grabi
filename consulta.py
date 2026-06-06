@@ -2,7 +2,13 @@ import time
 from datetime import datetime, timedelta
 from flask import Blueprint, render_template, redirect, request, session
 from utils import db, render_page, get_estabelecimento
+from dotenv import load_dotenv
+import os
+
 consulta_bp = Blueprint("consulta", __name__)
+
+load_dotenv()
+SENHA_ADMIN = os.getenv("SENHA_ADMIN")
 
 def tempo_decorrido(data_str):
     data = datetime.strptime(data_str, "%Y-%m-%d %H:%M:%S")
@@ -119,7 +125,7 @@ def consulta():
                 DO UPDATE SET valor = excluded.valor,
                 updated_at = CURRENT_TIMESTAMP
                 """,
-                (codigo, cnpj, valor)
+	                (codigo, cnpj, valor)
             )
             conn.commit()
             conn.close()
@@ -173,3 +179,18 @@ def atualizar_estabelecimento():
 
     return "", 204
 	
+@consulta_bp.route("/admin", methods=["GET", "POST"])
+def admin():
+    if request.method == "POST":
+        if request.form.get("senha") == SENHA_ADMIN:
+            session["admin"] = True
+            return redirect("/")
+        else:
+            fail = True
+            return render_template("admin.html", fail=fail)
+    return render_template("admin.html")
+
+@consulta_bp.route("/logout_admin")
+def logout_admin():
+    session.pop("admin", None)
+    return redirect("/")
