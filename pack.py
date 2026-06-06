@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, redirect, request
+from flask import Blueprint, render_template, redirect, request, session
 from utils import db
 
 pack_bp = Blueprint("pack", __name__)
@@ -14,6 +14,8 @@ def buscar_pack_por_id(id):
 @pack_bp.route("/packs",methods=["GET","POST"])
 @pack_bp.route("/packs/",methods=["GET","POST"])
 def packs():
+    if not session.get("admin"):
+        return redirect("/")
     conn=db();c=conn.cursor()
     editar_id=request.args.get("editar_id")
     pack_edicao=None

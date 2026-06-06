@@ -5,6 +5,8 @@ estabelecimento_bp = Blueprint("estabelecimento", __name__)
 @estabelecimento_bp.route("/estabelecimento",methods=["GET","POST"])
 @estabelecimento_bp.route("/estabelecimento/",methods=["GET","POST"])
 def estabelecimento():
+    if not session.get("admin"):
+        return redirect("/")
     if request.method=="POST":
         conn=db();c=conn.cursor()
         if request.method=="POST":

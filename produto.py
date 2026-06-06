@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, redirect, request
+from flask import Blueprint, render_template, redirect, request, session
 from utils import db
 
 produto_bp = Blueprint("produto", __name__)
@@ -13,6 +13,8 @@ def buscar_produto_por_id(id):
 @produto_bp.route("/produtos",methods=["GET","POST"])
 @produto_bp.route("/produtos/",methods=["GET","POST"])
 def produtos():
+    if not session.get("admin"):
+        return redirect("/")
     conn=db();c=conn.cursor()
     editar_id=request.args.get("editar_id")
     produto_edicao=None
@@ -41,6 +43,7 @@ def produtos():
             c.execute("delete from produto where codigo=?", (codigo,))
 
             conn.commit();conn.close();return redirect("/produtos")
+
     page=int(request.args.get("page",1));per_page=1000;offset=(page-1)*per_page
     where=" where "+" and ".join(filtros) if filtros else ""
     total=c.execute(f"select count(*) from produto{where}",valores).fetchone()[0]
@@ -51,6 +54,8 @@ def produtos():
 
 @produto_bp.route("/produto/<codigo>")
 def produto(codigo):
+    if not session.get("admin"):
+        return redirect("/")
     conn=db();cur=conn.cursor()
     cur.execute("SELECT id, codigo, descricao FROM produto WHERE codigo = ?", (codigo,))
     produto = cur.fetchone()
