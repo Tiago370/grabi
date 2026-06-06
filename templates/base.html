@@ -10,7 +10,11 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
 <div class="container">
 <a class="navbar-brand fw-bold" href="/">Grabi</a>
+{% if session.get("admin") %}
+<div>
+<a class="btn btn-outline-light me-2" href="/produtos">Produtos</a>
 </div>
+{% endif %}
 </nav>
 
 {% if session.get("admin") %}

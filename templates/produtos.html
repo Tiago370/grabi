@@ -11,7 +11,7 @@
 <input class="form-control" name="codigo" placeholder="Código de barras" value="{{ produto_edicao[1] if produto_edicao else '' }}" >
 </div>
 <div class="col-md-5">
-<input class="form-control" name="descricao" placeholder="Descrição" value="{{ produto_edicao[2] if produto_edicao else '' }}" >
+<input class="form-control" name="descricao" placeholder="Descrição" value="{{ produto_edicao[2] or '' if produto_edicao else '' }}" >
 </div>
 <div class="col-12 d-flex flex-column gap-2">
   <button type="submit" name="acao" value="consultar" class="btn btn-info w-100">Consultar</button>
@@ -41,7 +41,7 @@
 {% for p in produtos %}
 <tr onclick="window.location='{{ url_for('produto.produtos', editar_id=p[0]) }}'" style="cursor:pointer;">
 <td>{{ p[1] }}</td>
-<td>{{ p[2] }}</td>
+<td>{{ p[2] or '' }}</td>
 </tr>
 {% endfor %}
 </tbody>
