@@ -32,7 +32,7 @@ def comparacao_preco(codigo, cnpj):
     #mostrar comparação
     cur.execute("SELECT id, codigo, descricao FROM produto WHERE codigo = ?", (codigo,))
     produto = cur.fetchone()
-    produto_descricao = produto[2]
+    produto_descricao = produto[2] or produto[1]
     #buscar todos os preços
     cur.execute("SELECT e.nome,e.endereco,p.valor,p.updated_at FROM estabelecimento e INNER JOIN preco p ON e.cnpj = p.cnpj WHERE p.codigo = ?", (codigo,))
     precos = cur.fetchall()
@@ -44,7 +44,7 @@ def comparacao_preco(codigo, cnpj):
         atualizado_em = tempo_decorrido(preco[3])
         preco_obj ={"estabelecimento":estabelecimento,"endereco":endereco,"preco":valor,"atualizado_em":atualizado_em}
         lista_precos.append(preco_obj)
-    return render_page("comparacao_preco.html",precos=lista_precos)
+    return render_page("comparacao_preco.html",precos=lista_precos,produto=produto_descricao)
 
 @consulta_bp.route("/consulta",methods=["GET","POST"])
 @consulta_bp.route("/consulta/",methods=["GET","POST"])
@@ -74,13 +74,14 @@ def consulta():
             if not produto:
                 return render_page("produto_nao_cadastrado.html")
 
+            produto_descricao = produto[2] or produto[1]
             cnpj=session["estabelecimento_cnpj"]
             cur.execute("SELECT id, codigo, cnpj, valor FROM preco WHERE codigo = ? and cnpj = ?", (codigo,cnpj))
             preco = cur.fetchone()
             if not preco:
                 return render_page("produto_nao_monitorado.html") 
             else:
-                return render_page("verificar_preco.html",preco=preco[3],produto=produto[2],estabelecimento=session["estabelecimento_nome"])
+                return render_page("verificar_preco.html",preco=preco[3],produto=produto_descricao,estabelecimento=session["estabelecimento_nome"])
 
         if request.form.get("acao") == "cadastrar_preco":
             valor=request.form.get("preco")
@@ -108,7 +109,7 @@ def consulta():
                 INSERT INTO produto (codigo)
                 VALUES (?)
                 """,
-                (codigo)
+                (codigo,)
             )
             cur.execute(
                 """
@@ -132,9 +133,12 @@ def consulta():
             return comparacao_preco(codigo, cnpj)
         elif resposta == "nao":
             cur.execute("SELECT id, codigo, cnpj, valor FROM preco WHERE codigo = ? and cnpj = ?", (codigo,cnpj))
+            preco = cur.fetchone()
+            preco_atual = preco[3]
+            cur.execute("SELECT id, codigo, descricao FROM produto WHERE codigo = ?", (codigo,))
             produto = cur.fetchone()
-            preco_atual = produto[3]
-            return render_page("atualizar_preco.html", preco_atual=preco_atual)
+            produto_descricao = produto[2] or produto[1]
+            return render_page("atualizar_preco.html", preco_atual=preco_atual, produto=produto_descricao)
 
     if request.form.get("acao") == "atualizar_preco":
         codigo=session["codigo"]
