@@ -1,4 +1,4 @@
-q[ ] Atualizar o readme.
+[ ] Atualizar o readme.
 [X] Implementar o preenchimento automático dos campos latitude e longitude do estabelecimento.
 [X] Implementar um algoritmo que detecta o estabelecimento pela localização.
 [X] Colocar a coluna "CNPJ" no estabelecimento.
@@ -15,10 +15,14 @@ q[ ] Atualizar o readme.
 [X] Criar tela de atualização de preço.
 [ ] Criar tela de feedback da atualização do preço.
 [ ] Colocar uma animação de "loading" e esconder o botão na hora fe atualizar estabelecimebto
-[ ] Implementar o conceito de admin.
+[X] Implementar o conceito de admin.
     O admin pode colocar e editar nome de produto.
     O admin pode criar e editar estabelecimentos.
     O admin pode ativar e desativar estabelecimentos.
 [ ] Implementar o tratamento automatico de imagens de produtos.
 [ ] Colocar o produto, preço código e as porcentagens de cada preço concorrente.
     Se o preço do concorrente for menor e será verde, e vermelho caso o contrário.
+[ ] Criar o banco com a tabela tabela_preco.
+[ ] Criar o crud Anúncio.
+[ ] Implementar a exibição de anúncios
+[ ] Implementar a geraça de vCard.
