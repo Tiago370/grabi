@@ -2,12 +2,12 @@ import sqlite3, os, time
 from flask import session, render_template
 from math import radians, sin, cos, sqrt, atan2
 
-def db():return sqlite3.connect("pdv.db")
+def db():return sqlite3.connect("hml.db")
 
 def init_db():
     caminho_base=os.path.dirname(os.path.abspath(__file__))
     caminho_schema=os.path.join(caminho_base,"schema.sql")
-    caminho_db=os.path.join(caminho_base,"pdv.db")
+    caminho_db=os.path.join(caminho_base,"hml.db")
     if not os.path.exists(caminho_db):
         conn=sqlite3.connect(caminho_db)
         c=conn.cursor()
