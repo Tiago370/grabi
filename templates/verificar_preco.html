@@ -31,7 +31,11 @@
                 <form method="post" class="d-grid gap-3">
 
                     <input type="hidden" name="acao" value="verificar_preco">
-
+                    {% if session.get("admin") %}
+                    <div class="col-md-5">
+                        <input class="form-control" name="novo_nome" placeholder="Novo nome" value="{{ produto or '' if produto else '' }}" style="background-color: red; color: white;">
+                    </div>
+                    {% endif %}
                     <button
                         type="submit"
                         name="resposta"

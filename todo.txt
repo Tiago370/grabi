@@ -16,9 +16,9 @@
 [ ] Criar tela de feedback da atualização do preço.
 [ ] Colocar uma animação de "loading" e esconder o botão na hora fe atualizar estabelecimebto
 [X] Implementar o conceito de admin.
-    O admin pode colocar e editar nome de produto.
-    O admin pode criar e editar estabelecimentos.
-    O admin pode ativar e desativar estabelecimentos.
+[X] O admin pode colocar e editar nome de produto.
+[ ] O admin pode criar e editar estabelecimentos.
+[ ] O admin pode ativar e desativar estabelecimentos.
 [ ] Implementar o tratamento automatico de imagens de produtos.
 [ ] Colocar o produto, preço código e as porcentagens de cada preço concorrente.
     Se o preço do concorrente for menor e será verde, e vermelho caso o contrário.
@@ -26,3 +26,4 @@
 [ ] Criar o crud Anúncio.
 [ ] Implementar a exibição de anúncios
 [ ] Implementar a geraça de vCard.
+[ ] Implementar a troca de CNPJ do estabelecimento (todo os preços também precisarão ter o cnpj mudado.
