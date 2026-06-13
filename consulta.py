@@ -105,6 +105,7 @@ def consulta():
             )
             conn.commit()
             conn.close()
+            return comparacao_preco(codigo, cnpj)
 
         if request.form.get("acao") == "cadastrar_produto_preco":
             valor=request.form.get("preco")
@@ -146,7 +147,6 @@ def consulta():
                 (novo_nome,codigo)
             )
             conn.commit()
-            conn.close()
         if resposta == "sim":
             return comparacao_preco(codigo, cnpj)
         elif resposta == "nao":
