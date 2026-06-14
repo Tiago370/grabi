@@ -37,9 +37,7 @@ def tempo_decorrido(data_str):
 def comparacao_preco(codigo, cnpj):
     conn=db();cur=conn.cursor()
     #mostrar comparação
-    cur.execute("SELECT id, codigo, descricao FROM produto WHERE codigo = ?", (codigo,))
-    produto = cur.fetchone()
-    produto_descricao = produto[2] or produto[1]
+    produto = Produto.get(codigo)
     #buscar todos os preços
     cur.execute("SELECT e.nome,e.endereco,p.valor,p.updated_at FROM estabelecimento e INNER JOIN preco p ON e.cnpj = p.cnpj WHERE p.codigo = ?", (codigo,))
     precos = cur.fetchall()
@@ -51,7 +49,7 @@ def comparacao_preco(codigo, cnpj):
         atualizado_em = tempo_decorrido(preco[3])
         preco_obj ={"estabelecimento":estabelecimento,"endereco":endereco,"preco":valor,"atualizado_em":atualizado_em}
         lista_precos.append(preco_obj)
-    return render_page("comparacao_preco.html",precos=lista_precos,produto=produto_descricao)
+    return render_page("comparacao_preco.html",precos=lista_precos,produto=produto["descricao"])
 
 @consulta_bp.route("/consulta",methods=["GET","POST"])
 @consulta_bp.route("/consulta/",methods=["GET","POST"])
@@ -142,10 +140,8 @@ def consulta():
             cur.execute("SELECT id, codigo, cnpj, valor FROM preco WHERE codigo = ? and cnpj = ?", (codigo,cnpj))
             preco = cur.fetchone()
             preco_atual = preco[3]
-            cur.execute("SELECT id, codigo, descricao FROM produto WHERE codigo = ?", (codigo,))
-            produto = cur.fetchone()
-            produto_descricao = produto[2] or produto[1]
-            return render_page("atualizar_preco.html", preco_atual=preco_atual, produto=produto_descricao)
+            produto = Produto.get(codigo)
+            return render_page("atualizar_preco.html", preco_atual=preco_atual, produto=produto["descricao"])
 
     if request.form.get("acao") == "atualizar_preco":
         codigo=session["codigo"]
