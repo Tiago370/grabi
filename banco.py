@@ -1,5 +1,5 @@
 import sqlite3
-
+from datetime import datetime
 
 class Model:
     table = ""
@@ -76,16 +76,25 @@ class Estabelecimento(Model):
     identity = "cnpj"
     fields = ["cnpj", "nome", "endereco", "latitude", "longitude"]
 
+class Preco(Model):
+    table = "preco"
+    identity = ["codigo","cnpj"]
+    fields = ["codigo","cnpj","valor","updated_at"]
+
+    def save(self):
+        self.updated_at = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        return super().save()
+
 if __name__ == "__main__":
     Produto(
         codigo="1234"
     ).save()
-    print(Produto.get("1234").__dict__)
+    print(Produto.get("1234"))
     Produto(
         codigo="1234",
         descricao="Teste 1234"
     ).save()
-    print(Produto.get("1234").__dict__)
+    print(Produto.get("1234"))
 
     Estabelecimento(
         cnpj="1234",
@@ -93,4 +102,9 @@ if __name__ == "__main__":
         endereco="Av. Teste",
         latitude=0.123,
         longitude=1.234
+    ).save()
+    Preco(
+        cnpj="123",
+        codigo="122",
+        valor=1.81,
     ).save()

@@ -4,7 +4,7 @@ from flask import Blueprint, render_template, redirect, request, session
 from utils import db, render_page, get_estabelecimento
 from dotenv import load_dotenv
 import os
-from banco import Produto
+from banco import Produto, Preco
 
 consulta_bp = Blueprint("consulta", __name__)
 
@@ -90,18 +90,7 @@ def consulta():
             valor=request.form.get("preco")
             codigo=session["codigo"]
             cnpj=session["estabelecimento_cnpj"]
-            cur.execute(
-                """
-                INSERT INTO preco (codigo, cnpj, valor)
-                VALUES (?, ?, ?)
-                ON CONFLICT(codigo, cnpj)
-                DO UPDATE SET valor = excluded.valor,
-                updated_at = CURRENT_TIMESTAMP
-                """,
-                (codigo, cnpj, valor)
-            )
-            conn.commit()
-            conn.close()
+            Preco(codigo=codigo,cnpj=cnpj,valor=valor).save()
             return comparacao_preco(codigo, cnpj)
 
         if request.form.get("acao") == "cadastrar_produto_preco":
@@ -109,19 +98,7 @@ def consulta():
             codigo=session["codigo"]
             cnpj=session["estabelecimento_cnpj"]
             Produto(codigo=codigo).save()
-
-            cur.execute(
-                """
-                INSERT INTO preco (codigo, cnpj, valor)
-                VALUES (?, ?, ?)
-                ON CONFLICT(codigo, cnpj)
-                DO UPDATE SET valor = excluded.valor,
-                updated_at = CURRENT_TIMESTAMP
-                """,
-	                (codigo, cnpj, valor)
-            )
-            conn.commit()
-            conn.close()
+            Preco(codigo=codigo,cnpj=cnpj,valor=valor).save()
             return comparacao_preco(codigo, cnpj)
 
     if request.form.get("acao") == "verificar_preco":
@@ -145,16 +122,7 @@ def consulta():
         codigo=session["codigo"]
         cnpj=session["estabelecimento_cnpj"]
         novo_preco=request.form.get("novo_preco")
-        cur.execute(
-                """
-                UPDATE preco
-		SET valor = ?,
-    		updated_at = CURRENT_TIMESTAMP
-		WHERE codigo = ? AND cnpj = ?;
-                """,
-            (novo_preco, codigo, cnpj))
-        conn.commit()
-        conn.close()
+        Preco(codigo=codigo,cnpj=cnpj,valor=novo_preco).save()
         return comparacao_preco(codigo, cnpj) 
 
     if not session.get("estabelecimento_cnpj") or not session.get("estabelecimento_nome"):
