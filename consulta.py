@@ -136,7 +136,7 @@ def consulta():
         resposta=request.form.get("resposta")
         codigo=session["codigo"]
         cnpj=session["estabelecimento_cnpj"]
-        if session["admin"]:
+        if session.get("admin"):
             novo_nome=request.form.get("novo_nome")
             cur.execute(
                 """
