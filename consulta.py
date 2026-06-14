@@ -4,6 +4,7 @@ from flask import Blueprint, render_template, redirect, request, session
 from utils import db, render_page, get_estabelecimento
 from dotenv import load_dotenv
 import os
+from banco import Produto
 
 consulta_bp = Blueprint("consulta", __name__)
 
@@ -111,13 +112,8 @@ def consulta():
             valor=request.form.get("preco")
             codigo=session["codigo"]
             cnpj=session["estabelecimento_cnpj"]
-            cur.execute(
-                """
-                INSERT INTO produto (codigo)
-                VALUES (?)
-                """,
-                (codigo,)
-            )
+            Produto(codigo=codigo).save()
+
             cur.execute(
                 """
                 INSERT INTO preco (codigo, cnpj, valor)
@@ -138,15 +134,8 @@ def consulta():
         cnpj=session["estabelecimento_cnpj"]
         if session.get("admin"):
             novo_nome=request.form.get("novo_nome")
-            cur.execute(
-                """
-                UPDATE produto
-                SET descricao = ?
-                WHERE codigo = ?;
-                """,
-                (novo_nome,codigo)
-            )
-            conn.commit()
+            Produto(codigo=codigo,descricao=novo_nome).save()
+
         if resposta == "sim":
             return comparacao_preco(codigo, cnpj)
         elif resposta == "nao":
