@@ -35,15 +35,30 @@ class Model:
     def get(cls, value):
         colunas = "*" if not cls.fields else ",".join(cls.fields)
 
+        if isinstance(cls.identity, (list, tuple)):
+            if not isinstance(value, (list, tuple)):
+                raise ValueError("value deve ser lista/tupla quando identity tiver múltiplos campos")
+
+            if len(value) != len(cls.identity):
+                raise ValueError("Quantidade de valores diferente da quantidade de campos identity")
+
+            where = " AND ".join(f"{campo}=?" for campo in cls.identity)
+            params = tuple(value)
+
+        else:
+            where = f"{cls.identity}=?"
+            params = (value,)
+
         with cls.conn() as con:
             cursor = con.execute(
                 f"""
                 SELECT {colunas}
                 FROM {cls.table}
-                WHERE {cls.identity}=?
+                WHERE {where}
                 """,
-                (value,)
+                params
             )
+
             row = cursor.fetchone()
 
             if not row:

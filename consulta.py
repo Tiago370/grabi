@@ -79,12 +79,11 @@ def consulta():
                 return render_page("produto_nao_cadastrado.html")
 
             cnpj=session["estabelecimento_cnpj"]
-            cur.execute("SELECT id, codigo, cnpj, valor FROM preco WHERE codigo = ? and cnpj = ?", (codigo,cnpj))
-            preco = cur.fetchone()
+            preco = Preco.get((codigo,cnpj))
             if not preco:
                 return render_page("produto_nao_monitorado.html") 
             else:
-                return render_page("verificar_preco.html",preco=preco[3],produto=produto["descricao"],estabelecimento=session["estabelecimento_nome"])
+                return render_page("verificar_preco.html",preco=preco["valor"],produto=produto["descricao"],estabelecimento=session["estabelecimento_nome"])
 
         if request.form.get("acao") == "cadastrar_preco":
             valor=request.form.get("preco")
@@ -112,9 +111,8 @@ def consulta():
         if resposta == "sim":
             return comparacao_preco(codigo, cnpj)
         elif resposta == "nao":
-            cur.execute("SELECT id, codigo, cnpj, valor FROM preco WHERE codigo = ? and cnpj = ?", (codigo,cnpj))
-            preco = cur.fetchone()
-            preco_atual = preco[3]
+            preco = Preco.get((codigo,cnpj))
+            preco_atual = preco["valor"]
             produto = Produto.get(codigo)
             return render_page("atualizar_preco.html", preco_atual=preco_atual, produto=produto["descricao"])
 
