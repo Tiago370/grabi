@@ -37,8 +37,21 @@ class Produto(Model):
     identity = "codigo"
     fields = ["codigo", "descricao"]
 
+class Estabelecimento(Model):
+    table = "estabelecimento"
+    identity = "cnpj"
+    fields = ["cnpj", "nome", "endereco", "latitude", "longitude"]
+
 if __name__ == "__main__":
     Produto(
         codigo="123",
         descricao="Arroz Integral"
+    ).save()
+
+    Estabelecimento(
+        cnpj="1234",
+        nome="Teste Estabelecimento ORM 2",
+        endereco="Av. Teste",
+        latitude=0.123,
+        longitude=1.234
     ).save()
