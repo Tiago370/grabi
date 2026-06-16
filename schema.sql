@@ -40,14 +40,12 @@ create table estabelecimento(
     longitude real
 );
 
-create table input(
-    id integer primary key autoincrement,
-    estabelecimento_id integer,
-    produto_id integer,
-    criado_em integer,
-    preco real,
-    foreign key(produto_id) references produto(id),
-    foreign key(estabelecimento_id) references estabelecimento(id)
+create table historico(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    codigo TEXT NOT NULL,
+    cnpj TEXT NOT NULL,
+    valor REAL NOT NULL,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 );
 
 CREATE TABLE preco(

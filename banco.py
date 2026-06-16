@@ -91,6 +91,14 @@ class Estabelecimento(Model):
     identity = "cnpj"
     fields = ["cnpj", "nome", "endereco", "latitude", "longitude"]
 
+class Historico(Model):
+    table = "historico"
+    identity = ["codigo","cnpj","updated_at"]
+    fields = ["codigo","cnpj","valor","updated_at"]
+
+    def save(self):
+        return super().save()
+
 class Preco(Model):
     table = "preco"
     identity = ["codigo","cnpj"]
@@ -98,6 +106,12 @@ class Preco(Model):
 
     def save(self):
         self.updated_at = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        Historico(
+            codigo=self.codigo,
+            cnpj=self.cnpj,
+            valor=self.valor,
+            updated_at=self.updated_at
+        ).save()
         return super().save()
 
 if __name__ == "__main__":
@@ -123,3 +137,4 @@ if __name__ == "__main__":
         codigo="122",
         valor=1.81,
     ).save()
+    print(Preco.get(("122","123")))

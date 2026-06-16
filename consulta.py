@@ -109,6 +109,8 @@ def consulta():
             Produto(codigo=codigo,descricao=novo_nome).save()
 
         if resposta == "sim":
+            preco = Preco.get((codigo,cnpj))
+            Preco(**preco).save()
             return comparacao_preco(codigo, cnpj)
         elif resposta == "nao":
             preco = Preco.get((codigo,cnpj))

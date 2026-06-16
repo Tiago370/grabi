@@ -13,17 +13,18 @@
 [X] Tornar a detrcção de estabelecimento automática.
 [X] Refotorar o consulta.py
 [X] Criar tela de atualização de preço.
-[ ] Criar tela de feedback da atualização do preço.
-[ ] Colocar uma animação de "loading" e esconder o botão na hora fe atualizar estabelecimebto
+[X] Implementação da tabela histórico.
 [X] Implementar o conceito de admin.
 [X] O admin pode colocar e editar nome de produto.
+[ ] Criar tela de feedback da atualização do preço.
+[ ] Colocar uma animação de "loading" e esconder o botão na hora fe atualizar estabelecimebto..
 [ ] O admin pode criar e editar estabelecimentos.
 [ ] O admin pode ativar e desativar estabelecimentos.
 [ ] Implementar o tratamento automatico de imagens de produtos.
 [ ] Colocar o produto, preço código e as porcentagens de cada preço concorrente.
     Se o preço do concorrente for menor e será verde, e vermelho caso o contrário.
-[ ] Criar o banco com a tabela tabela_preco.
 [ ] Criar o crud Anúncio.
 [ ] Implementar a exibição de anúncios
 [ ] Implementar a geraça de vCard.
 [ ] Implementar a troca de CNPJ do estabelecimento (todo os preços também precisarão ter o cnpj mudado.
+[ ] Criar o CRUD grupo_produto.
