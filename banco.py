@@ -114,6 +114,22 @@ class Preco(Model):
         ).save()
         return super().save()
 
+class GrupoProdutoRel(Model):
+    table = "grupo_produto_rel"
+    identity = ["slug_id","codigo"]
+    fields = ["slug_id","codigo"]
+
+class GrupoProduto(Model):
+    table = "grupo_produto"
+    identity = "slug_id"
+    fields = ["slug_id","nome"]
+
+    def add_produto(slug_id,codigo):
+        GrupoProdutoRel(slug_id=slug_id,codigo=codigo)
+
+    def produtos(slug_id):
+        pass
+
 if __name__ == "__main__":
     Produto(
         codigo="1234"
@@ -137,4 +153,15 @@ if __name__ == "__main__":
         codigo="122",
         valor=1.81,
     ).save()
-    print(Preco.get(("122","123")))
+    GrupoProduto(
+        slug_id="arroz-branco",
+        nome="Arroz Branco",
+    ).save()
+    print(GrupoProduto.get("arroz-branco"))
+    GrupoProdutoRel(
+        slug_id="arroz-branco",
+        codigo="4",
+    ).save()
+    print(GrupoProdutoRel.get(("arroz-branco","4")))
+    GrupoProduto.add_produto("arroz-branco","4")
+    print(GrupoProduto.produtos("arroz-branco"))

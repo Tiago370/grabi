@@ -56,3 +56,16 @@ CREATE TABLE preco(
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     UNIQUE (codigo, cnpj)
 );
+
+CREATE TABLE grupo_produto(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    slug_id TEXT NOT NULL UNIQUE,
+    nome TEXT NOT NULL
+);
+
+CREATE TABLE grupo_produto_rel(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    slug_id TEXT NOT NULL UNIQUE,
+    codigo TEXT NOT NULL,
+    UNIQUE (slug_id, codigo)
+);
