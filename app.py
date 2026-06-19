@@ -82,4 +82,5 @@ def configuracoes():
 def terminal():
     return render_template("terminal-consulta.html")
 
-app.run(debug=True)
+if __name__ == "__main__":
+    app.run(debug=True)
