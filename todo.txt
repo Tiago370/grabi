@@ -1,21 +1,23 @@
-[ ] Atualizar o readme.
-[X] Implementar o preenchimento automático dos campos latitude e longitude do estabelecimento.
-[X] Implementar um algoritmo que detecta o estabelecimento pela localização.
-[X] Colocar a coluna "CNPJ" no estabelecimento.
-[X] Atualizar o CNPJ do estabelecimento no session.
-[X] Consulta se o produto existe.
-[X] Criar a tabela "preco" que relaciona cnpj e codigo.
-[X] Criar tela de primeiro monitoramento.
-[X] Criar tela de validação de preço.
-[X] Colocar estabelecimento na tela de consulta.
-[X] Colocar botão de atualizar estabelecimento na tela de consulta.
-[X] Criar o wraper "render_page".
-[X] Tornar a detrcção de estabelecimento automática.
-[X] Refotorar o consulta.py
-[X] Criar tela de atualização de preço.
-[X] Implementação da tabela histórico.
-[X] Implementar o conceito de admin.
-[X] O admin pode colocar e editar nome de produto.
+// GitHub
+[ ] Atualizar o readme
+[ ] Privatizar o repositório
+
+// Finalização da POC
+[ ] Trocar o nome "Grabi" por "Pechincha Digital".
+[ ] Colocar o menu "Mapa". Vai mostrar no mapa todos os estabelecimentos cobertos.
+[ ] Colocar o menu "Tutorial". Vai descrever todas as funcionalidades do site.
+[ ] Colocar o menu "Doações". A gente vai pedir PIX para os primeiros usuários.
+[ ] Colocar o menu "Contato". Vai ter email, redes sociais, e link para mensagem no whatsapp.
+[ ] Colocar o rodapé "Feito com muito amor por Tiago Amaral".
+[ ] Colocar o slogan "Pesquisou 🔎, pechinchou 💸, economizou 💰!"
+
+
+// Marketing
+[ ] Criar logo.
+[ ] Criar cartãozinho para divulgação. Vai ter url, qrcode e whatsapp.
+
+
+// Tarefas em standby.
 [ ] Criar tela de feedback da atualização do preço.
 [ ] Colocar uma animação de "loading" e esconder o botão na hora fe atualizar estabelecimebto..
 [ ] O admin pode criar e editar estabelecimentos.
