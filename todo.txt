@@ -3,7 +3,7 @@
 [ ] Privatizar o repositório
 
 // Finalização da POC
-[ ] Trocar o nome "Grabi" por "Pechincha Digital".
+[X] Trocar o nome "Grabi" por "Pechincha Digital".
 [ ] Colocar o menu "Mapa". Vai mostrar no mapa todos os estabelecimentos cobertos.
 [ ] Colocar o menu "Tutorial". Vai descrever todas as funcionalidades do site.
 [ ] Colocar o menu "Doações". A gente vai pedir PIX para os primeiros usuários.
