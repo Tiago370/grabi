@@ -6,7 +6,7 @@
 [X] Trocar o nome "Grabi" por "Pechincha Digital".
 [X] Colocar o menu "Mapa". Vai mostrar no mapa todos os estabelecimentos cobertos.
 [ ] Colocar o menu "Tutorial". Vai descrever todas as funcionalidades do site.
-[ ] Colocar o menu "Doações". A gente vai pedir PIX para os primeiros usuários.
+[X] Colocar o menu "Doações". A gente vai pedir PIX para os primeiros usuários.
 [X] Colocar o menu "Contato". Vai ter email, redes sociais, e link para mensagem no whatsapp.
 [X] Colocar o rodapé "Feito com muito amor por Tiago Amaral".
 [X] Colocar o slogan "Pesquisou 🔎, pechinchou 💸, economizou 💰!"

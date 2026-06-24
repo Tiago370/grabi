@@ -1,0 +1,91 @@
+{% extends "base.html" %}
+
+{% block conteudo %}
+
+<div class="row justify-content-center">
+<div class="col-lg-8">
+
+<div class="card shadow-sm mb-4">
+
+<div class="card-header fw-bold">
+💛 Apoie o Projeto
+</div>
+
+<div class="card-body">
+
+<h4 class="mb-3">
+Um pedido simples.
+</h4>
+
+<p>
+O <strong>Pechincha.digital</strong> ainda está no começo.
+Hoje ele é pequeno, tem recursos limitados e está sendo construído aos poucos.
+</p>
+
+<p>
+Não temos como prometer funcionalidades futuras, crescimento ou qualquer retorno.
+Mas existe uma coisa que ajuda muito:
+<strong>saber que existem pessoas que acham que vale a pena continuar.</strong>
+</p>
+
+<p>
+Se você acredita na ideia, considere enviar <strong>apenas R$ 1</strong>.
+Não pelo valor em si, mas como um gesto simbólico dizendo:
+</p>
+
+<div class="alert alert-light border">
+“Continua. Tem gente torcendo por isso.”
+</div>
+
+<p>
+Se quiser contribuir com outro valor, também será recebido com gratidão.
+Mas o pedido principal continua sendo só <strong>R$ 1</strong>.
+</p>
+
+<div class="d-grid gap-3 mt-4">
+
+<button
+class="btn btn-success btn-lg"
+onclick="copiarPix()">
+💚 Doar R$ 1 (copiar Pix) </button>
+
+<button
+class="btn btn-outline-success btn-lg"
+onclick="copiarPix()">
+✨ Doar outro valor (copiar Pix) </button>
+
+</div>
+
+<div class="text-center mt-4">
+
+<div class="small text-muted mb-2">
+Chave Pix
+</div>
+
+<code id="pix">
+SEU_PIX_AQUI
+</code>
+
+<div class="mt-3 text-muted small">
+Se o projeto crescer, você ajudou quando ele ainda era quase nada 💚
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+</div>
+
+<script>
+function copiarPix(){
+const pix=document.getElementById("pix").innerText.trim();
+navigator.clipboard.writeText(pix);
+alert("Chave Pix copiada 💚");
+}
+</script>
+
+{% endblock %}
+
