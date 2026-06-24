@@ -4,7 +4,7 @@
 
 // Finalização da POC
 [X] Trocar o nome "Grabi" por "Pechincha Digital".
-[ ] Colocar o menu "Mapa". Vai mostrar no mapa todos os estabelecimentos cobertos.
+[X] Colocar o menu "Mapa". Vai mostrar no mapa todos os estabelecimentos cobertos.
 [ ] Colocar o menu "Tutorial". Vai descrever todas as funcionalidades do site.
 [ ] Colocar o menu "Doações". A gente vai pedir PIX para os primeiros usuários.
 [ ] Colocar o menu "Contato". Vai ter email, redes sociais, e link para mensagem no whatsapp.
