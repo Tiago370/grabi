@@ -12,6 +12,7 @@ from estabelecimento import estabelecimento_bp
 from mapa import mapa_bp
 from contato import contato_bp
 from doacao import doacao_bp
+from tutorial import tutorial_bp
 
 app=Flask(__name__)
 app.secret_key="grabi"
@@ -27,6 +28,7 @@ app.register_blueprint(estabelecimento_bp)
 app.register_blueprint(mapa_bp)
 app.register_blueprint(contato_bp)
 app.register_blueprint(doacao_bp)
+app.register_blueprint(tutorial_bp)
 
 @app.route("/")
 def index():return redirect("/consulta")
