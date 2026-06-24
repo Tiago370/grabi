@@ -14,7 +14,7 @@
 [X] Nomear as telas do fluxo principal.
 [ ] Rescrever o texto do tutorial.
 [ ] Colocar o nome do produto na tela de "Produto não monitorado"
-[ ] Remover os autofocus nos campoa das telas do fluxo principal..
+[>] Remover os autofocus nos campoa das telas do fluxo principal..
 
 // Marketing
 [ ] Criar logo.
