@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+
+{% block conteudo %}
+
+<div class="row justify-content-center">
+<div class="col-lg-10">
+
+<div class="card shadow-sm mb-4">
+
+<div class="card-header fw-bold">
+🗺️ Mapa dos Estabelecimentos Cobertos
+</div>
+
+<div class="card-body">
+
+<div id="mapa" style="height: 600px;border-radius:12px;"></div>
+
+</div>
+
+</div>
+
+</div>
+</div>
+
+<link
+rel="stylesheet"
+href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+/>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+<script>
+
+const estabelecimentos = {{ estabelecimentos|tojson }};
+
+const mapa = L.map("mapa").setView(
+estabelecimentos.length
+? [estabelecimentos[0].lat, estabelecimentos[0].lng]
+: [-22.4256, -45.4528],
+12
+);
+
+L.tileLayer(
+"https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+{
+attribution:"© OpenStreetMap"
+}
+).addTo(mapa);
+
+const pontos = [];
+
+estabelecimentos.forEach(e => {
+
+const marcador = L.marker([e.lat,e.lng])
+.addTo(mapa)
+.bindPopup(`<b>${e.nome}</b>`);
+
+pontos.push([e.lat,e.lng]);
+
+});
+
+if (pontos.length > 1) {
+mapa.fitBounds(pontos);
+}
+
+</script>
+
+{% endblock %}

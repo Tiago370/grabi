@@ -71,6 +71,16 @@ class Model:
 
         return cls(**dados).__dict__
 
+    @classmethod
+    def get_all(cls):
+        with cls.conn() as con:
+            con.row_factory = sqlite3.Row
+            rows = con.execute(
+                f"SELECT {','.join(cls.fields)} FROM {cls.table}"
+            ).fetchall()
+
+        return [cls(**dict(row)) for row in rows]
+
 class Produto(Model):
 #    database = "catalogo.db"
     table = "produto"
