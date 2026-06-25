@@ -7,20 +7,15 @@
         <div class="card shadow-sm border-0 mt-3">
             <div class="card-header fw-bold">Produto não monitorado</div>
             <div class="card-body p-4 text-center">
+                <div class="produto-nome">
+                    {{ produto }}
+                </div>
 
-                <div class="display-4 mb-3">🛒</div>
-
-                <h2 class="fw-bold mb-3">
-                    Produto ainda não monitorado
-                </h2>
-
-                <p class="text-muted mb-4">
-                    Este produto ainda não possui preços cadastrados neste estabelecimento.
-                </p>
-
+                <div class="produto-ean">
+                    EAN · {{ codigo }}
+                </div>
                 <div class="alert alert-success text-start">
-                    <strong>Você pode ajudar!</strong><br>
-                    Seja o primeiro usuário a informar o preço visto na gôndola. Sua contribuição ajudará outras pessoas a economizarem.
+                    Esse produto ainda não havia sido monitorado no <strong>{{ estabelecimento }}</strong>. Muito obrigado pela contribuição. Agora muitas outras pessoas poderão acompanhar.
                 </div>
 
                 <form method="post" class="mt-4">

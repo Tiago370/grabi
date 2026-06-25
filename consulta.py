@@ -49,7 +49,7 @@ def comparacao_preco(codigo, cnpj):
         atualizado_em = tempo_decorrido(preco[3])
         preco_obj ={"estabelecimento":estabelecimento,"endereco":endereco,"preco":valor,"atualizado_em":atualizado_em}
         lista_precos.append(preco_obj)
-    return render_page("comparacao_preco.html",precos=lista_precos,produto=produto["descricao"])
+    return render_page("comparacao_preco.html",precos=lista_precos,produto=produto["descricao"],codigo=codigo)
 
 @consulta_bp.route("/consulta",methods=["GET","POST"])
 @consulta_bp.route("/consulta/",methods=["GET","POST"])

@@ -8,9 +8,13 @@
             <div class="card-header fw-bold">Comparação de preços encontrados</div>
             <div class="card-body p-4">
                 <div class="text-center">
-                    <h2 class="fw-bold mb-3">
+                    <div class="produto-nome">
                         {{ produto }}
-                    </h2>
+                    </div>
+
+                    <div class="produto-ean">
+                        EAN · {{ codigo }}
+                    </div>
                 </div>
 
                 {% if precos %}
