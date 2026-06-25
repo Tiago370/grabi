@@ -49,7 +49,7 @@ def comparacao_preco(codigo, cnpj):
         atualizado_em = tempo_decorrido(preco[3])
         preco_obj ={"estabelecimento":estabelecimento,"endereco":endereco,"preco":valor,"atualizado_em":atualizado_em}
         lista_precos.append(preco_obj)
-    return render_page("comparacao_preco.html",precos=lista_precos,produto=produto["descricao"])
+    return render_page("comparacao_preco.html",precos=lista_precos,produto=produto["descricao"],codigo=codigo)
 
 @consulta_bp.route("/consulta",methods=["GET","POST"])
 @consulta_bp.route("/consulta/",methods=["GET","POST"])
@@ -76,12 +76,12 @@ def consulta():
             produto = Produto.get(codigo)
             session["codigo"] = codigo
             if not produto:
-                return render_page("produto_nao_cadastrado.html")
+                return render_page("produto_nao_cadastrado.html", codigo=codigo)
 
             cnpj=session["estabelecimento_cnpj"]
             preco = Preco.get((codigo,cnpj))
             if not preco:
-                return render_page("produto_nao_monitorado.html") 
+                return render_page("produto_nao_monitorado.html",codigo=codigo,produto=produto["descricao"],estabelecimento=session["estabelecimento_nome"]) 
             else:
                 return render_page("verificar_preco.html",preco=preco["valor"],produto=produto["descricao"],estabelecimento=session["estabelecimento_nome"])
 

@@ -5,27 +5,10 @@
     <div class="col-12 col-md-8 col-lg-6">
 
         <div class="card shadow-sm border-0 mt-3">
+            <div class="card-header fw-bold">Produto não cadastrado</div>
             <div class="card-body p-4 text-center">
-
-                <div class="display-4 mb-3">🚀</div>
-
-                <h2 class="fw-bold mb-3">
-                    Você encontrou um produto novo!
-                </h2>
-
-                <div class="alert alert-warning text-start">
-                    <div class="fw-bold mb-2">
-                        Produto ainda não cadastrado
-                    </div>
-
-                    <div>
-                        Seja a primeira pessoa a informar o preço encontrado neste estabelecimento.
-                    </div>
-                </div>
-
                 <div class="alert alert-success text-start">
-                    <strong>Seu registro já tem utilidade.</strong><br>
-                    Quando outras pessoas encontrarem este mesmo produto em outros mercados, as comparações serão feitas automaticamente.
+                    O produto de código <strong>{{ codigo }}</strong> não estava cadastrado no Pechincha.digital. Você foi a primeira pessoa a pesquisar esse produto. Agora sabemos que ele existe. Muito obrigado pela contribuição. Em breve nossa equipe vai colocar o nome dele.
                 </div>
 
                 <form method="post" class="mt-4">
@@ -48,8 +31,7 @@
                                 step="0.01"
                                 min="0"
                                 placeholder="0,00"
-                                required
-                                autofocus>
+                                required>
                         </div>
 
                         <div class="form-text">
