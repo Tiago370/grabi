@@ -12,10 +12,11 @@
 [X] Colocar o slogan "Pesquisou 🔎, pechinchou 💸, economizou 💰!"
 [X] Adiciona um manifesto.
 [X] Nomear as telas do fluxo principal.
-[ ] Rescrever o texto do tutorial.
-[ ] Colocar o nome do produto na tela de "Produto não monitorado"
+[X] Rescrever o texto do tutorial.
+[X] Colocar o nome do produto na tela de "Produto não monitorado"
 [X] Remover os autofocus nos campoa das telas do fluxo principal..
 [X] Revisar e melhorar os textos da tela do fluxo principal.
+[X] Colocar um <nav> na oarte dr baixo com alguns botões.
 
 // Marketing
 [ ] Criar logo.
