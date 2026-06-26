@@ -2,21 +2,15 @@
 [ ] Atualizar o readme
 [ ] Privatizar o repositório
 
-// Finalização da POC
-[X] Trocar o nome "Grabi" por "Pechincha Digital".
-[X] Colocar o menu "Mapa". Vai mostrar no mapa todos os estabelecimentos cobertos.
-[X] Colocar o menu "Tutorial". Vai descrever todas as funcionalidades do site.
-[X] Colocar o menu "Doações". A gente vai pedir PIX para os primeiros usuários.
-[X] Colocar o menu "Contato". Vai ter email, redes sociais, e link para mensagem no whatsapp.
-[X] Colocar o rodapé "Feito com muito amor por Tiago Amaral".
-[X] Colocar o slogan "Pesquisou 🔎, pechinchou 💸, economizou 💰!"
-[X] Adiciona um manifesto.
-[X] Nomear as telas do fluxo principal.
-[X] Rescrever o texto do tutorial.
-[X] Colocar o nome do produto na tela de "Produto não monitorado"
-[X] Remover os autofocus nos campoa das telas do fluxo principal..
-[X] Revisar e melhorar os textos da tela do fluxo principal.
-[X] Colocar um <nav> na oarte dr baixo com alguns botões.
+// Restruturação da POC
+[ ] Criar página de produto (vai listar o preço em todos os estabelecimentos.
+[ ] Criar página de estabelecimento (vai listar os produtos que naquele estabelecimentos estão mais baratos)
+    Os produtos são clicáveis, vão para página de produto.
+[ ] Criar um bot que periodicamente varre todos os produtos recém consultados, e busca o estabelecimento cujo o preço é o maos barato.
+[ ] Criar a tabela flag-barato para marcar um produto X como barato no estabelecimento Y.
+    (codigo, cnpj, created_at)
+[ ] Criar a tabela flag-caro para marcar um produto X como caro no estabelecimento Y.
+    (codigo, cnpj, created_at)
 
 // Marketing
 [ ] Criar logo.

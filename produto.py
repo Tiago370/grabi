@@ -1,5 +1,6 @@
 from flask import Blueprint, render_template, redirect, request, session
 from utils import db
+from consulta import comparacao_preco
 
 produto_bp = Blueprint("produto", __name__)
 
@@ -61,3 +62,8 @@ def produto(codigo):
     produto = cur.fetchone()
     conn.close()
     return {"nome": produto[2]}
+
+@produto_bp.route("/produto/<ean>/")
+def produto_comparacao(ean):
+    return comparacao_preco(ean, False)
+
