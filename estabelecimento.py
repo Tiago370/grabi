@@ -28,8 +28,11 @@ def mostrar_estabelecimento(cnpj):
 #    if not estabelecimento:
 #        abort(404)
 
-    limite_recente = datetime.utcnow() - timedelta(days=7)
+    inicio = (datetime.now() - timedelta(days=1)).strftime("%Y-%m-%d %H:%M:%S")
 
-    precos = Preco.get_all()
+    precos = Preco.between(
+        "updated_at",
+        inicio=inicio
+    )
 
     return render_page("mostrar_estabelecimento.html", estabelecimento=estabelecimento, precos=precos)

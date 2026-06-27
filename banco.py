@@ -81,6 +81,41 @@ class Model:
 
         return [cls(**dict(row)) for row in rows]
 
+    @classmethod
+    def filter(cls, where="", params=()):
+        colunas = "*" if not cls.fields else ",".join(cls.fields)
+        query = f"SELECT {colunas} FROM {cls.table}"
+
+        if where:
+            query += f" WHERE {where}"
+
+        with cls.conn() as con:
+            con.row_factory = sqlite3.Row
+            rows = con.execute(query, params).fetchall()
+
+        return [cls(**dict(row)) for row in rows]
+
+    def __repr__(self):
+        return str(self.__dict__)
+
+    @classmethod
+    def between(cls, campo, inicio=None, fim=None):
+        filtros = []
+        params = []
+
+        if inicio:
+            filtros.append(f"{campo} >= ?")
+            params.append(inicio)
+
+        if fim:
+            filtros.append(f"{campo} <= ?")
+            params.append(fim)
+
+        return cls.filter(
+            " AND ".join(filtros),
+            tuple(params)
+        )
+
 class Produto(Model):
 #    database = "catalogo.db"
     table = "produto"
@@ -141,37 +176,4 @@ class GrupoProduto(Model):
         pass
 
 if __name__ == "__main__":
-    Produto(
-        codigo="1234"
-    ).save()
-    print(Produto.get("1234"))
-    Produto(
-        codigo="1234",
-        descricao="Teste 1234"
-    ).save()
-    print(Produto.get("1234"))
-
-    Estabelecimento(
-        cnpj="1234",
-        nome="Teste Estabelecimento ORM 2",
-        endereco="Av. Teste",
-        latitude=0.123,
-        longitude=1.234
-    ).save()
-    Preco(
-        cnpj="123",
-        codigo="122",
-        valor=1.81,
-    ).save()
-    GrupoProduto(
-        slug_id="arroz-branco",
-        nome="Arroz Branco",
-    ).save()
-    print(GrupoProduto.get("arroz-branco"))
-    GrupoProdutoRel(
-        slug_id="arroz-branco",
-        codigo="4",
-    ).save()
-    print(GrupoProdutoRel.get(("arroz-branco","4")))
-    GrupoProduto.add_produto("arroz-branco","4")
-    print(GrupoProduto.produtos("arroz-branco"))
+    pass
