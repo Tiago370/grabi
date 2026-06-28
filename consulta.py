@@ -4,7 +4,7 @@ from flask import Blueprint, render_template, redirect, request, session
 from utils import db, render_page, get_estabelecimento
 from dotenv import load_dotenv
 import os
-from banco import Produto, Preco
+from banco import Produto, Preco, Estabelecimento
 
 consulta_bp = Blueprint("consulta", __name__)
 
@@ -128,7 +128,8 @@ def consulta():
 
     if not session.get("estabelecimento_cnpj") or not session.get("estabelecimento_nome"):
         return render_page("set_estabelecimento.html")
-    return render_page("consulta.html",estabelecimento=session["estabelecimento_nome"])
+    estabelecimentos = Estabelecimento.get_all()
+    return render_page("consulta.html",estabelecimento=session["estabelecimento_nome"], estabelecimentos=estabelecimentos)
 
 @consulta_bp.route("/atualizar_estabelecimento",methods=["POST"])
 def atualizar_estabelecimento():
