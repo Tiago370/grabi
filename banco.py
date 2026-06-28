@@ -82,12 +82,25 @@ class Model:
         return [cls(**dict(row)) for row in rows]
 
     @classmethod
-    def filter(cls, where="", params=()):
+    def filter(cls, where="", params=(), order_by=None, limit=None, offset=None):
         colunas = "*" if not cls.fields else ",".join(cls.fields)
         query = f"SELECT {colunas} FROM {cls.table}"
 
         if where:
             query += f" WHERE {where}"
+
+        if order_by:
+            query += f" ORDER BY {order_by}"
+
+        if limit is not None:
+            query += " LIMIT ?"
+            params = tuple(params) + (limit,)
+
+        if offset is not None:
+            if limit is None:
+                query += " LIMIT -1"
+            query += " OFFSET ?"
+            params = tuple(params) + (offset,)
 
         with cls.conn() as con:
             con.row_factory = sqlite3.Row

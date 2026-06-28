@@ -31,15 +31,17 @@ def mostrar_estabelecimento(cnpj):
 
     inicio = (datetime.now() - timedelta(days=4)).strftime("%Y-%m-%d %H:%M:%S")
 
-    precos = Preco.between(
-        "updated_at",
-        inicio=inicio
+    precos = Preco.filter(
+        order_by="updated_at DESC",
+        limit=100
     )
+
     precos_full = []
     for preco in precos:
         produto = Produto.get(preco.codigo)
         combinado = produto | preco.__dict__
         combinado["updated_at"] = tempo_decorrido(combinado["updated_at"])
-        precos_full.append(combinado)
+        if combinado["codigo"] != combinado["descricao"]:
+            precos_full.append(combinado)
 
     return render_page("mostrar_estabelecimento.html", estabelecimento=estabelecimento, precos=precos_full)
