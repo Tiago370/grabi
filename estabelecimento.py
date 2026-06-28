@@ -31,6 +31,8 @@ def mostrar_estabelecimento(cnpj):
     inicio = (datetime.now() - timedelta(days=4)).strftime("%Y-%m-%d %H:%M:%S")
 
     precos = Preco.filter(
+        where="cnpj = ?",
+        params=(cnpj,),
         order_by="updated_at DESC",
         limit=100
     )
@@ -44,3 +46,4 @@ def mostrar_estabelecimento(cnpj):
             precos_full.append(combinado)
 
     return render_page("mostrar_estabelecimento.html", estabelecimento=estabelecimento, precos=precos_full)
+
