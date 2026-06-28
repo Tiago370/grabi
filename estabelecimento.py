@@ -2,6 +2,7 @@ from datetime import datetime, timedelta
 from flask import Blueprint, render_template, redirect, request, session, abort
 from utils import db, calcular_total, render_page
 from banco import Estabelecimento, Preco, Produto
+from consulta import tempo_decorrido
 estabelecimento_bp = Blueprint("estabelecimento", __name__)
 
 @estabelecimento_bp.route("/estabelecimento",methods=["GET","POST"])
@@ -28,7 +29,7 @@ def mostrar_estabelecimento(cnpj):
     if not estabelecimento:
         abort(404)
 
-    inicio = (datetime.now() - timedelta(days=1)).strftime("%Y-%m-%d %H:%M:%S")
+    inicio = (datetime.now() - timedelta(days=4)).strftime("%Y-%m-%d %H:%M:%S")
 
     precos = Preco.between(
         "updated_at",
@@ -38,6 +39,7 @@ def mostrar_estabelecimento(cnpj):
     for preco in precos:
         produto = Produto.get(preco.codigo)
         combinado = produto | preco.__dict__
+        combinado["updated_at"] = tempo_decorrido(combinado["updated_at"])
         precos_full.append(combinado)
 
     return render_page("mostrar_estabelecimento.html", estabelecimento=estabelecimento, precos=precos_full)

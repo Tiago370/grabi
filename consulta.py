@@ -13,7 +13,7 @@ SENHA_ADMIN = os.getenv("SENHA_ADMIN")
 
 def tempo_decorrido(data_str):
     data = datetime.strptime(data_str, "%Y-%m-%d %H:%M:%S")
-    data = data - timedelta(hours=3)
+    data = data - timedelta(hours=0)
     diff = datetime.now() - data
 
     segundos = int(diff.total_seconds())
