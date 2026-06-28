@@ -1,3 +1,6 @@
+// TODO 28/06/26
+[ ] Tornar os produtos clicáveis na tela do estabelecimento.
+
 // GitHub
 [ ] Atualizar o readme
 [ ] Privatizar o repositório
