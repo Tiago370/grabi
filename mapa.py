@@ -7,7 +7,6 @@ mapa_bp = Blueprint("mapa", __name__)
 @mapa_bp.route("/mapa/",methods=["GET","POST"])
 def mapa():
     estabelecimentos = Estabelecimento.get_all()
-    print(estabelecimentos)
     pontos = []
 
     for e in estabelecimentos:

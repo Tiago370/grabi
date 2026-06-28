@@ -24,7 +24,6 @@ def estabelecimento():
 @estabelecimento_bp.route("/estabelecimento/<cnpj>/",methods=["GET"])
 def mostrar_estabelecimento(cnpj):
     estabelecimento = Estabelecimento.get(cnpj)
-    print(estabelecimento)
 
     if not estabelecimento:
         abort(404)

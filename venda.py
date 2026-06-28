@@ -74,7 +74,6 @@ def venda():
                     pack = buscar_pack_por_cod(cod)
                     if pack:
                         quantidade = int(pack[5])
-                        print(quantidade)
                         if qtd >= quantidade:
                             n = int(qtd/quantidade)
                             r = qtd - n*quantidade

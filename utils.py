@@ -21,7 +21,6 @@ def calcular_total():
 
 def necessita_atualizar_estabelecimento():
     timestamp = session.get("timestamp_localizacao")
-    print(">>> timestamp: ",timestamp)
     if timestamp is None:
         return True
     if time.time() - timestamp > 5*60:
@@ -32,7 +31,6 @@ def render_page(template, **kwargs):
     contexto = {
         "atualizar_estabelecimento": necessita_atualizar_estabelecimento()
     }
-    print(contexto)
     return render_template(
         template,
         **contexto,
