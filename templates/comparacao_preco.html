@@ -34,12 +34,14 @@
                                 <div>
 
                                     <h5 class="fw-bold mb-1">
-                                        {% if item.preco == menor_preco %}
-                                        🏆 {{ item.estabelecimento }}
-                                        {% else %}
-                                        🏪 {{ item.estabelecimento }}
-                                        {% endif %}
-                                    </h5>
+                                        <a href="{{ url_for('estabelecimento.mostrar_estabelecimento', cnpj=item.cnpj) }}" class="text-decoration-none" >
+                                                 {% if item.preco == menor_preco %}
+                                                     🏆 {{ item.estabelecimento }}
+                                                 {% else %}
+                                                     🏪 {{ item.estabelecimento }}
+                                                 {% endif %}
+                                         </a>
+                                     </h5>
 
                                     <div class="text-muted">
                                         📍 {{ item.endereco }}

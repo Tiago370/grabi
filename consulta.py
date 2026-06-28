@@ -39,7 +39,7 @@ def comparacao_preco(codigo, cnpj):
     #mostrar comparação
     produto = Produto.get(codigo)
     #buscar todos os preços
-    cur.execute("SELECT e.nome,e.endereco,p.valor,p.updated_at FROM estabelecimento e INNER JOIN preco p ON e.cnpj = p.cnpj WHERE p.codigo = ?", (codigo,))
+    cur.execute("SELECT e.nome,e.endereco,p.valor,p.updated_at,e.cnpj FROM estabelecimento e INNER JOIN preco p ON e.cnpj = p.cnpj WHERE p.codigo = ?", (codigo,))
     precos = cur.fetchall()
     lista_precos = []
     for preco in precos:
@@ -47,7 +47,8 @@ def comparacao_preco(codigo, cnpj):
         endereco = preco[1]
         valor = preco[2]
         atualizado_em = tempo_decorrido(preco[3])
-        preco_obj ={"estabelecimento":estabelecimento,"endereco":endereco,"preco":valor,"atualizado_em":atualizado_em}
+        cnpj = preco[4]
+        preco_obj ={"estabelecimento":estabelecimento,"endereco":endereco,"preco":valor,"atualizado_em":atualizado_em,"cnpj":cnpj}
         lista_precos.append(preco_obj)
     return render_page("comparacao_preco.html",precos=lista_precos,produto=produto["descricao"],codigo=codigo)
 
